@@ -1,20 +1,40 @@
 import React, {useState, useEffect} from 'react'
 import QuizCard from './QuizCard'
 
-function QuizArea() {
+function QuizArea({Rate}) {
 
-    const [quizzes, setQuizzes] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [quizName, setQuizName] = useState('');
+    const [quizzes, setQuizzes] = useState([]); // для зберігання created quizzes
+    const [showModal, setShowModal] = useState(false); // modal for adding quizzes
+    const [quizName, setQuizName] = useState(''); 
 
-    useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem('quizzes')) || [];
-        setQuizzes(stored)
-    }, [])
+   useEffect(() => {
+  try {
+    const item = localStorage.getItem('quizzes');
+
+    // Перевіряємо, чи item взагалі є і чи він не "undefined"
+    if (item && item !== 'undefined') {
+      const parsed = JSON.parse(item);
+      if (Array.isArray(parsed)) {
+        setQuizzes(parsed);
+      } else {
+        console.warn('quizzes is not an array, resetting...');
+        setQuizzes([]);
+        localStorage.removeItem('quizzes'); // очищаємо зламане
+      }
+    } else {
+      setQuizzes([]);
+    }
+  } catch (error) {
+    console.error('❌ Помилка при читанні quizzes з localStorage:', error);
+    setQuizzes([]);
+    localStorage.removeItem('quizzes'); // видаляємо некоректне
+  }
+}, []);
+
 
   const handleAddQuiz = () => {
     if (quizName.trim() === '') return;
-    const newQuiz = { name: quizName.trim(), successRate: 0, flashcards: [] };
+    const newQuiz = { name: quizName.trim(), successRate: Rate, flashcards: [] };
     const updated = [...quizzes, newQuiz];
     setQuizzes(updated);
     localStorage.setItem('quizzes', JSON.stringify(updated));
@@ -22,6 +42,15 @@ function QuizArea() {
     setShowModal(false);
   };
 
+
+
+const deleteQuiz = (indexToDelete) => {
+  setQuizzes(prevQuizzes => {
+    const updated = prevQuizzes.filter((_, i) => i !== indexToDelete);
+    localStorage.setItem("quizzes", JSON.stringify(updated));
+    return updated;
+  });
+};
 
    return (
   <div className="p-8 md:p-10 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -80,6 +109,7 @@ function QuizArea() {
           key={index}
           cardName={quiz.name}
           successRate={quiz.successRate}
+          onDelete={() => deleteQuiz(index)}
           className="w-full sm:w-1/2 lg:w-1/3"
         />
       ))}

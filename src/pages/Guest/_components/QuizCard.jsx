@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function QuizCard({ cardName, successRate }) {
+function QuizCard({ cardName, successRate, onDelete }) {
+   const [Rate, setRate] = useState(10);
 
    const navigate = useNavigate();
 
@@ -12,6 +13,12 @@ function QuizCard({ cardName, successRate }) {
   const handleStart = () => {
     navigate(`/quiz/${cardName}`);
   };
+
+   const handleQuizRate = () => {
+    setRate(
+
+    )
+  }
 
   return (
   <div
@@ -31,11 +38,12 @@ function QuizCard({ cardName, successRate }) {
       hover:-translate-y-1
       "
   >
+    <button className='text-red-900' onClick={onDelete}> x </button>
     <h1 className="text-xl font-bold mb-3 text-[#4E5174]">
       {cardName}
     </h1>
-    <p className="text-gray-600 mb-6">
-      Success rate: {successRate}%
+    <p className="text-gray-600 mb-6" onChange={handleQuizRate}>
+      Success rate: {Rate}%
     </p>
 
     <div className="flex gap-4">
