@@ -4,7 +4,7 @@ import { auth } from '../../../../config/firebase'; // Adjust the path based on 
 import { signOut } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
-const SignOutBtn = async () => {
+const SignOutBtn = () => {
     const navigate = useNavigate();
 
     const handleSignOut = async () => {
@@ -19,7 +19,8 @@ const SignOutBtn = async () => {
   return (
   <div>
     <button onClick={handleSignOut} 
-    className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition'>
+    className='px-4 py-2 bg-red-500 text-white rounded
+     hover:bg-red-700 hover:scale-[1.02] transition-all duration-200 ease-in-out'>
     Sign Out</button>
   </div>
   );

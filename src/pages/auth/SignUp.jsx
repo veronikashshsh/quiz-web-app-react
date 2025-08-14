@@ -3,6 +3,8 @@
 import { auth } from '../../../config/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
+import BtnReturnToGuest from '../Guest/_components/BtnReturnToGuest';
+import BtnToMain from '../_components/BtnToMain';
 
    const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,8 +15,10 @@ import { useNavigate } from "react-router-dom";
 
     const navigate = useNavigate();
 
-    // Redirect to dashboard after successful registration
-   
+    const navigateToLogin = () => {
+      navigate("/login")
+    }
+
       const handleCreateUser = async (e) => {
         e.preventDefault();
 
@@ -49,25 +53,23 @@ import { useNavigate } from "react-router-dom";
 
     return (
   <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900">
-  {/* Left side - image, half width on md+ screens */}
   <div className="hidden md:block md:w-1/2">
     <img
-      src="/register.jpg" // use correct public path or import accordingly
+      src="/register.jpg"
       alt="Register illustration"
-      className="object-cover w-full h-full"
+      className="object-cover w-full h-screen"
     />
   </div>
+<div className='m-5'>
+  <BtnToMain className="m-7"/>
+  </div>
 
-  {/* Right side - form, full width on small screens, half on md+ */}
   <div className="w-full md:w-1/2 flex items-center justify-center p-6">
     <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
       <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center">
         Register your Account
       </h2>
-
-      {/* Your form start */}
       <form onSubmit={handleCreateUser} className="space-y-4">
-        {/* Name input */}
         <div className="flex flex-col">
           <label htmlFor="name" className="mb-1 font-semibold text-gray-700 dark:text-gray-300">
             Name
@@ -83,7 +85,6 @@ import { useNavigate } from "react-router-dom";
           />
         </div>
 
-        {/* Email input */}
         <div className="flex flex-col">
           <label htmlFor="email" className="mb-1 font-semibold text-gray-700 dark:text-gray-300">
             Email
@@ -148,7 +149,7 @@ import { useNavigate } from "react-router-dom";
           </label>
         </div>
 
-        {/* Submit button */}
+      
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow-md transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
@@ -156,6 +157,9 @@ import { useNavigate } from "react-router-dom";
           Register
         </button>
       </form>
+      <div className='cursor-pointer text-center m-5 text-slate-400 '>
+      <a onClick={navigateToLogin} > Already have an account? <br />Sign in</a>
+      </div>
     </div>
   </div>
 </div>

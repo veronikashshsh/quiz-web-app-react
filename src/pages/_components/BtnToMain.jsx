@@ -1,17 +1,17 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 
-
-function BtnReturnToGuest() {
-    let navigateToGuestMode = useNavigate(); 
-     const routeChangeToGuest = () =>{ 
-       navigateToGuestMode("/guest"); 
+function BtnToMain() {
+    let navigateToMainPage = useNavigate(); 
+     const routeChangeToMain = () =>{ 
+       navigateToMainPage("/"); 
   }
 
+
   return (
-   
-      <button
-        onClick={routeChangeToGuest}
+    <div>
+        <button
+        onClick={routeChangeToMain}
         type="button"
         className="
           flex items-center justify-center
@@ -35,7 +35,8 @@ function BtnReturnToGuest() {
       >
         ←
       </button>
+    </div>
   )
 }
 
-export default BtnReturnToGuest
+export default BtnToMain
