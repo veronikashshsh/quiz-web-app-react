@@ -8,6 +8,7 @@ import SignIn from './pages/auth/SignIn.jsx';
 import SignUp from './pages/auth/SignUp.jsx';
 import Dashboard from './pages/dashboard/Dashboard.jsx';
 import UserQuizArea from './pages/dashboard/_components/UserQuizArea.jsx';
+import LearnPage from './pages/LearnPage/LearnPage.jsx';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
          <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
          <Route path="/quiz/:quizName" element={<LearnCards />} />
 
-        <Route path="/userquizarea/:name" element={<UserQuizArea />} />
+        <Route path="/userquizarea/:name" element={<LearnPage />} />
+        
       </Routes>
     </BrowserRouter>
   )

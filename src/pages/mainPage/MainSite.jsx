@@ -1,6 +1,8 @@
 import React from 'react'
 import Header from './_components/Header'
 import { useNavigate } from "react-router-dom";
+import Footer from './_components/Footer';
+import Testimonials from './_components/Testimonials';
 
 function MainSite() {
 
@@ -41,9 +43,8 @@ function MainSite() {
    <div className=''>
 
    </div>
-   <footer>
-
-   </footer>
+   <Testimonials />
+   <Footer />
    </>
   )
   }

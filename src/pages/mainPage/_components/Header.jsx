@@ -11,7 +11,7 @@ function Header() {
          navigateToSignIn("/login"); 
     }
   return (
-    <div className="dark:bg-gray-900  text-sm p-4">
+    <div className="dark:bg-gray-900  text-sm p-4 sticky top-0 z-50">
       <nav className="flex items-center justify-between">
         <img src="public/logo.png" alt="logo" className="h-8" />
         
