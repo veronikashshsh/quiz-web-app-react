@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import BtnToMain from '../../_components/BtnToMain'
-import SignOutBtn from './SignOutBtn'
+import BtnToMain from './BtnToMain'
+import SignOutBtn from '../features/auth/SignOutBtn'
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../../../config/firebase';
+import { auth } from '../../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { LogOut } from 'lucide-react';
 

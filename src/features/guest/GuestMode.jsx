@@ -1,6 +1,6 @@
-import Header from '../mainPage/_components/Header'
-import QuizArea from './_components/QuizArea';
-import BtnToMain from '../_components/BtnToMain';
+import Header from '../main/components/Header'
+import QuizArea from '../learn/components/QuizArea';
+import BtnToMain from '../../components/BtnToMain';
 
 function GuestMode() {
     

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { auth, googleProvider } from '../../../config/firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
-import BtnToMain from '../_components/BtnToMain';
+import BtnToMain from './../../components/BtnToMain'
 
 const SignIn = () => {
   const navigate = useNavigate();
