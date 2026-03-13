@@ -1,8 +1,7 @@
 'use client';
 
-import MainContent from './_components/MainContent';
-import NavBar from './_components/NavBar';
-import SignOutBtn from './_components/SignOutBtn';
+import NavBar from '../../components/Navbar'
+import MainContent from './components/MainContent';
 
 function Dashboard() {
   return (

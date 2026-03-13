@@ -1,6 +1,6 @@
 'use client';
 
-import { auth } from '../../../../config/firebase'; // Adjust the path based on your file structure
+import { auth } from '../../../config/firebase'; // Adjust the path based on your file structure
 import { signOut } from 'firebase/auth';
 import { LogOut, LogOutIcon } from 'lucide-react';
 import { useNavigate } from "react-router-dom";

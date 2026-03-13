@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import BtnReturnToGuest from './BtnReturnToGuest';
+import BtnReturnToGuest from '../../guest/components/BtnReturnToGuest';
 
 function QuizEditor() {
   const { quizName } = useParams();

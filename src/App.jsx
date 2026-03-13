@@ -1,14 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
-import MainSite from './pages/mainPage/MainSite.jsx'
-import GuestMode from './pages/Guest/GuestMode.jsx'
-import QuizEditor from './pages/Guest/_components/QuizEditor.jsx';
-import LearnCards from './pages/Guest/_components/learnCards.jsx';
-import SignIn from './pages/auth/SignIn.jsx';
-import SignUp from './pages/auth/SignUp.jsx';
-import Dashboard from './pages/dashboard/Dashboard.jsx';
-import UserQuizArea from './pages/dashboard/_components/UserQuizArea.jsx';
-import LearnPage from './pages/LearnPage/LearnPage.jsx';
+import MainSite from './features/main/MainSite.jsx'
+import GuestMode from './features/guest/GuestMode.jsx'
+import QuizEditor from './features/learn/components/QuizEditor.jsx';
+import LearnCards from './features/learn/components/LearnCards.jsx';
+import SignIn from './features/auth/SignIn.jsx';
+import SignUp from './features/auth/SignUp.jsx';
+import Dashboard from './features/dashboard/Dashboard.jsx';
+import LearnPage from './features/learn/LearnPage.jsx';
 
 function App() {
   return (

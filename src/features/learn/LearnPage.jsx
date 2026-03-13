@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../dashboard/_components/NavBar'
-import MainContent from '../dashboard/_components/MainContent'
+import NavBar from '../../components/Navbar'
+import MainContent from '../dashboard/components/MainContent'
 
 const LearnPage = () => {
   return (
