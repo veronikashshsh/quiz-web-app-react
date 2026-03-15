@@ -1,104 +1,76 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function QuizCard({ cardName, successRate, onDelete }) {
-   const [Rate, setRate] = useState(10);
+// Rate приходить з props — картка не зберігає дані, вона тільки відображає
+// Локальний useState тут зайвий — дані живуть в QuizArea
+function QuizCard({ cardName, successRate = 0, onDelete }) {
+  const navigate = useNavigate();
 
-   const navigate = useNavigate();
+  // Колір індикатора залежить від відсотку успішності
+  function getRateColor(rate) {
+    if (rate >= 70) return 'bg-emerald-500';
+    if (rate >= 40) return 'bg-amber-400';
+    return 'bg-red-400';
+  }
 
-  const handleEdit = () => {
-    navigate(`/quiz/edit/${cardName}`);
-  };
-
-  const handleStart = () => {
-    navigate(`/quiz/${cardName}`);
-  };
-
-   const handleQuizRate = () => {
-    setRate(
-
-    )
+  function getRateTextColor(rate) {
+    if (rate >= 70) return 'text-emerald-600';
+    if (rate >= 40) return 'text-amber-500';
+    return 'text-red-500';
   }
 
   return (
-  <div
-    className="
-      card 
-      border 
-      p-6 
-      m-4 
-      rounded-lg 
-      shadow-md 
-      bg-white 
-      w-80 
-      transition-all 
-      duration-300 
-      ease-in-out
-      hover:shadow-xl
-      hover:-translate-y-1
-      "
-  >
-    <button className='text-red-900' onClick={onDelete}> x </button>
-    <h1 className="text-xl font-bold mb-3 text-[#4E5174]">
-      {cardName}
-    </h1>
-    <p className="text-gray-600 mb-6" onChange={handleQuizRate}>
-      Success rate: {Rate}%
-    </p>
+    <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-indigo-200 hover:shadow-sm transition group">
 
-    <div className="flex gap-4">
-      <button
-        onClick={handleEdit}
-        className="
-          flex-1 
-          bg-blue-500 
-          hover:bg-blue-700 
-          focus:bg-blue-700 
-          text-white 
-          font-semibold 
-          py-2 
-          rounded 
-          transition-colors 
-          duration-300 
-          ease-in-out 
-          shadow-sm 
-          hover:shadow-lg
-          focus:outline-none
-          focus:ring-2
-          focus:ring-blue-300
-          "
-        aria-label="Edit quiz"
-      >
-        Edit
-      </button>
+      {/* Top row — назва і кнопка видалення */}
+      <div className="flex items-start justify-between gap-2">
+        <h2 className="text-base font-semibold text-gray-900 leading-tight">
+          {cardName}
+        </h2>
+        <button
+          onClick={onDelete}
+          aria-label="Delete quiz"
+          className="shrink-0 w-6 h-6 rounded-md text-gray-300 hover:text-red-500 hover:bg-red-50 flex items-center justify-center text-lg leading-none transition"
+        >
+          ×
+        </button>
+      </div>
 
-      <button
-        onClick={handleStart}
-        className="
-          flex-1 
-          bg-blue-500 
-          hover:bg-blue-700 
-          focus:bg-blue-700 
-          text-white 
-          font-semibold 
-          py-2 
-          rounded 
-          transition-colors 
-          duration-300 
-          ease-in-out 
-          shadow-sm 
-          hover:shadow-lg
-          focus:outline-none
-          focus:ring-2
-          focus:ring-blue-300
-          "
-        aria-label="Start quiz"
-      >
-        Start
-      </button>
+      {/* Success rate */}
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-gray-400 font-medium">Success rate</span>
+          <span className={`text-xs font-semibold ${getRateTextColor(successRate)}`}>
+            {successRate}%
+          </span>
+        </div>
+        {/* Прогрес-бар — набагато наочніше ніж просто текст */}
+        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-500 ${getRateColor(successRate)}`}
+            style={{ width: `${successRate}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 pt-1">
+        <button
+          onClick={() => navigate(`/quiz/edit/${cardName}`)}
+          aria-label="Edit quiz"
+          className="flex-1 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => navigate(`/quiz/${cardName}`)}
+          aria-label="Start quiz"
+          className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
+        >
+          Start
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
-export default QuizCard
+export default QuizCard;

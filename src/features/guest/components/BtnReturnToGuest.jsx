@@ -15,21 +15,8 @@ function BtnReturnToGuest() {
         type="button"
         className="
           flex items-center justify-center
-          w-12 h-12
-          bg-white dark:bg-gray-800
-          text-[#959EC9]
-          rounded-full
-          shadow-md
-          hover:bg-gray-200 dark:hover:bg-gray-700
-          transition 
-          duration-300 
-          ease-in-out
-          transform
-          hover:-translate-y-1 hover:scale-105
-          focus:outline-none
-          focus:ring-2
-          focus:ring-blue-500
-          focus:ring-offset-2
+          w-8 h-8
+         px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-sm font-semibold rounded-lg transition
           "
         aria-label="Return to main page"
       >

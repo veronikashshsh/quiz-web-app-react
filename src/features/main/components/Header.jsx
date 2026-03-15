@@ -1,32 +1,30 @@
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-        let navigateToSignUp = useNavigate(); 
-       const routeChangeToSignUp = () =>{ 
-         navigateToSignUp("/register"); 
-    }
-  
-         let navigateToSignIn = useNavigate(); 
-       const routeChangeToSignIn = () =>{ 
-         navigateToSignIn("/login"); 
-    }
+  const navigate = useNavigate();
+
   return (
-    <div className="dark:bg-gray-900  text-sm p-4 sticky top-0 z-50">
-      <nav className="flex items-center justify-between">
-        <img src="public/logo.png" alt="logo" className="h-8" />
+    <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <nav className="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between">
         
-        <div className="flex gap-4">
-          <button onClick={routeChangeToSignUp}
-          className="px-4 py-2 bg-slate-300 rounded text-gray-900  hover:bg-gray-100 transition">
-            + create an account
+        <img src="/logo.png" alt="logo" className="h-8" />
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/login")}
+            className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition"
+          >
+            Log in
           </button>
-          <button onClick={routeChangeToSignIn}
-          className="px-4 py-2 border border-white rounded text-white hover:bg-slate-300 hover:text-[#959EC9] transition">
-            Log into
+          <button
+            onClick={() => navigate("/register")}
+            className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
+          >
+            Create account
           </button>
         </div>
       </nav>
-    </div>
+    </header>
   );
 }
 
