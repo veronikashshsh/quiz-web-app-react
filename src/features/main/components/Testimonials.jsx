@@ -1,29 +1,8 @@
 import React from 'react'
 import { Star, Quote } from 'lucide-react'
+import { TESTIMONIALS } from '../../../data/landingData'
 
-const testimonials = [
-    {
-    name: "Sarah Johnson",
-    role: "Medical Student",
-    image: "https://picsum.photos/id/494/100/100",
-    rating: 5,
-    text: "EFFLearn transformed how I study for medical school. The spaced repetition system helped me retain complex information much better than traditional methods."
-  },
-  {
-    name: "Michael Chen",
-    role: "Software Developer",
-    image: "https://picsum.photos/id/507/100/100",
-    rating: 5,
-    text: "As a developer learning new technologies, EFFLearn's structured approach helped me master React and TypeScript in just 3 months."
-  },
-  {
-    name: "Emma Rodriguez",
-    role: "Language Learner",
-    image: "https://picsum.photos/id/548/100/100",
-    rating: 5,
-    text: "I've tried many language learning apps, but EFFLearn's methodology helped me become conversational in Spanish faster than I ever imagined."
-  }
-]
+
 
 function Testimonials() {
     return (
@@ -39,7 +18,7 @@ function Testimonials() {
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {TESTIMONIALS.map((testimonial, index) => (
             <div 
               key={index}
               className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative"

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Rate приходить з props — картка не зберігає дані, вона тільки відображає
 // Локальний useState тут зайвий — дані живуть в QuizArea
-function QuizCard({ cardName, successRate = 0, onDelete }) {
+function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
   const navigate = useNavigate();
 
   // Колір індикатора залежить від відсотку успішності
@@ -55,7 +55,7 @@ function QuizCard({ cardName, successRate = 0, onDelete }) {
       {/* Actions */}
       <div className="flex gap-2 pt-1">
         <button
-          onClick={() => navigate(`/quiz/edit/${cardName}`)}
+          onClick={() => onEdit(cardName)}
           aria-label="Edit quiz"
           className="flex-1 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition"
         >

@@ -3,6 +3,7 @@ import QuizArea from '../learn/components/QuizArea';
 import BtnToMain from '../../components/BtnToMain';
 
 function GuestMode() {
+  
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />

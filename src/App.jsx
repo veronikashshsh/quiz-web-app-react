@@ -4,8 +4,6 @@ import MainSite from './features/main/MainSite.jsx'
 import GuestMode from './features/guest/GuestMode.jsx'
 import QuizEditor from './features/learn/components/QuizEditor.jsx';
 import LearnCards from './features/learn/components/LearnCards.jsx';
-import SignIn from './features/auth/SignIn.jsx';
-import SignUp from './features/auth/SignUp.jsx';
 import Dashboard from './features/dashboard/Dashboard.jsx';
 import LearnPage from './features/learn/LearnPage.jsx';
 
@@ -15,14 +13,14 @@ function App() {
       <Routes>
         <Route path="/" element={<MainSite />} />
         <Route path="/guest" element={<GuestMode />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<SignUp />} />
+        <Route path="/login" element={<MainSite initialModal="signin" />} />
+        <Route path="/register"  element={<MainSite initialModal="signup" />} />
         <Route path="/dashboard/:name" element={< Dashboard/>} />
          <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
          <Route path="/quiz/:quizName" element={<LearnCards />} />
 
         <Route path="/userquizarea/:name" element={<LearnPage />} />
-        
+         
       </Routes>
     </BrowserRouter>
   )

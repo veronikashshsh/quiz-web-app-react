@@ -44,7 +44,7 @@ function QuizEditor() {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-8"
+        className="bg-gray-100 border border-gray-200 rounded-xl p-6 mb-8"
       >
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex flex-col gap-1.5">
@@ -52,7 +52,7 @@ function QuizEditor() {
               Question
             </label>
             <input
-              className="px-3.5 py-2.5 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
+              className="px-3.5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
               placeholder="e.g. What is React?"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -63,7 +63,7 @@ function QuizEditor() {
               Answer
             </label>
             <input
-              className="px-3.5 py-2.5 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
+              className="px-3.5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
               placeholder="e.g. A JavaScript library..."
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
@@ -120,3 +120,5 @@ function QuizEditor() {
 }
 
 export default QuizEditor;
+
+
