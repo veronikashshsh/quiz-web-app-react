@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 import QuizCard from './QuizCard';
+import QuizEditorModal from './QuizEditorModal';
 
 function QuizArea({ Rate }) {
   const [quizzes, setQuizzes] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [quizName, setQuizName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedQuiz, setSelectedQuiz] = useState(null);
+
+function handleEdit(quizName) {
+  setSelectedQuiz(quizName);
+  setIsModalOpen(true);
+}
 
   useEffect(() => {
     try {
@@ -89,9 +97,17 @@ function QuizArea({ Rate }) {
             cardName={quiz.name}
             successRate={quiz.successRate}
             onDelete={() => deleteQuiz(index)}
+            onEdit={handleEdit}
           />
         ))}
       </div>
+
+      {isModalOpen && (
+  <QuizEditorModal
+    quizName={selectedQuiz}
+    onClose={() => setIsModalOpen(false)}
+  />
+)}
 
       {/* Modal */}
       {showModal && (

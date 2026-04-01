@@ -1,76 +1,151 @@
-const MainContent = () => {
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../../../config/firebase';
+import { BookOpen, BarChart2, Plus, ArrowRight } from 'lucide-react';
+
+// Статичні дані — в реальному проєкті прийдуть з БД/props
+// Поки хардкод — але структура готова до заміни на реальні дані
+const STATS = [
+  {
+    label: 'Total quizzes',
+    value: '0',
+    sub: 'Create your first quiz',
+    color: 'text-indigo-600',
+    bg: 'bg-indigo-50',
+    icon: BookOpen,
+  },
+  {
+    label: 'Cards studied',
+    value: '0',
+    sub: 'Start studying to see progress',
+    color: 'text-emerald-600',
+    bg: 'bg-emerald-50',
+    icon: BarChart2,
+  },
+  {
+    label: 'Avg. success rate',
+    value: '—',
+    sub: 'No data yet',
+    color: 'text-amber-600',
+    bg: 'bg-amber-50',
+    icon: BarChart2,
+  },
+];
+
+function MainContent() {
+  const navigate = useNavigate();
+  const username = auth.currentUser?.displayName || '';
+
   return (
-    <div className="flex-1 p-6 overflow-auto">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Dashboard Overview</h2>
-        <p className="text-gray-600">Monitor your quiz performance and manage your content</p>
-      </div>
+    <div className="flex-1 overflow-auto bg-gray-50">
+      <div className="max-w-5xl mx-auto px-6 py-8">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Total Quizzes</h3>
-          <p className="text-3xl font-bold text-blue-600">24</p>
-          <p className="text-sm text-gray-500 mt-2">+3 from last month</p>
+        {/* Page header */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Welcome back{username ? `, ${username}` : ''}
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Here's an overview of your learning progress
+          </p>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Active Users</h3>
-          <p className="text-3xl font-bold text-green-600">1,247</p>
-          <p className="text-sm text-gray-500 mt-2">+12% from last week</p>
+        {/* Stats grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          {STATS.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={stat.label}
+                className="bg-white border border-gray-200 rounded-xl p-5"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    {stat.label}
+                  </p>
+                  <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center`}>
+                    <Icon size={16} className={stat.color} />
+                  </div>
+                </div>
+                <p className={`text-3xl font-bold mb-1 ${stat.color}`}>
+                  {stat.value}
+                </p>
+                <p className="text-xs text-gray-400">{stat.sub}</p>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Completion Rate</h3>
-          <p className="text-3xl font-bold text-purple-600">87%</p>
-          <p className="text-sm text-gray-500 mt-2">+5% improvement</p>
-        </div>
-      </div>
+        {/* Bottom grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Recent Activity</h3>
-          <div className="space-y-3">
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium text-gray-800">New quiz created: "React Fundamentals"</p>
-                <p className="text-xs text-gray-500">2 hours ago</p>
+          {/* Recent activity */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <h2 className="text-sm font-semibold text-gray-900 mb-4">
+              Recent activity
+            </h2>
+            {/* Empty state — поки немає даних з БД */}
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center mb-3">
+                <BarChart2 size={18} className="text-gray-400" />
               </div>
-            </div>
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium text-gray-800">Quiz completed by 15 users</p>
-                <p className="text-xs text-gray-500">4 hours ago</p>
-              </div>
-            </div>
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium text-gray-800">Statistics updated</p>
-                <p className="text-xs text-gray-500">6 hours ago</p>
-              </div>
+              <p className="text-sm text-gray-500">No activity yet</p>
+              <p className="text-xs text-gray-400 mt-1">
+                Start a quiz to see your history here
+              </p>
             </div>
           </div>
-        </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h3>
-          <div className="space-y-3">
-            <button className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">
-              Create New Quiz
-            </button>
-            <button className="w-full p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200">
-              View All Statistics
-            </button>
-            <button className="w-full p-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors duration-200">
-              Manage Users
-            </button>
+          {/* Quick actions */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <h2 className="text-sm font-semibold text-gray-900 mb-4">
+              Quick actions
+            </h2>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => navigate(`/userquizarea/${username}`)}
+                className="flex items-center justify-between w-full px-4 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] transition text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <Plus size={16} className="text-indigo-200" />
+                  <span className="text-sm font-semibold text-white">
+                    Create new quiz
+                  </span>
+                </div>
+                <ArrowRight size={14} className="text-indigo-300" />
+              </button>
+
+              <button
+                onClick={() => navigate(`/userquizarea/${username}`)}
+                className="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <BookOpen size={16} className="text-gray-400" />
+                  <span className="text-sm font-medium text-gray-700">
+                    Go to my quizzes
+                  </span>
+                </div>
+                <ArrowRight size={14} className="text-gray-300" />
+              </button>
+
+              <button
+                onClick={() => navigate(`/stats/${username}`)}
+                className="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <BarChart2 size={16} className="text-gray-400" />
+                  <span className="text-sm font-medium text-gray-700">
+                    View statistics
+                  </span>
+                </div>
+                <ArrowRight size={14} className="text-gray-300" />
+              </button>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default MainContent
+export default MainContent;

@@ -1,141 +1,161 @@
-import React, { useState, useEffect } from 'react'
-import BtnToMain from './BtnToMain'
-import SignOutBtn from '../features/auth/SignOutBtn'
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { LogOut } from 'lucide-react';
+import {
+  LayoutDashboard,
+  BookOpen,
+  BarChart2,
+  Settings,
+} from 'lucide-react';
+import SignOutBtn from '../features/auth/components/SignOutBtn';
+
+// Дані винесені окремо — той самий патерн що FEATURES і STEPS
+// Щоб додати пункт меню — додаєш один об'єкт, не чіпаєш JSX
+const getMenuItems = (navigate, username) => [
+  {
+    name: 'Dashboard',
+    icon: LayoutDashboard,
+    onClick: () => navigate(`/dashboard/${username}`),
+  },
+  {
+    name: 'Quizzes',
+    icon: BookOpen,
+    onClick: () => navigate(`/userquizarea/${username}`),
+  },
+  {
+    name: 'Statistics',
+    icon: BarChart2,
+    onClick: () => navigate(`/stats/${username}`),
+  },
+  {
+    name: 'Settings',
+    icon: Settings,
+    onClick: () => navigate(`/settings/${username}`),
+  },
+];
 
 function NavBar() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [user, setUser] = useState(null);
-    const [username, setUsername] = useState("");
-     const [activeItem, setActiveItem] = useState('Dashboard')
-    const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [activeItem, setActiveItem] = useState('Dashboard');
+  const navigate = useNavigate();
 
-    const navigateToLearnPage = () => {
-       if (user && user.displayName) {
-            navigate(`/userquizarea/${auth.currentUser.displayName}`);
-        } else {
-        console.log("User not logged in yet or displayName missing");
-        }
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
-    const navigateToDashboard = () => {
-       if (user && user.displayName) {
-           navigate(`/dashboard/${auth.currentUser.displayName}`);
-        } else {
-        console.log("User not logged in yet or displayName missing");
-        }
-    }
+  // username береться з user — не потрібен окремий useState
+  const username = user?.displayName || '';
+  const menuItems = getMenuItems(navigate, username);
 
-
-      const menuItems = [
-    {
-      name: 'Dashboard',
-      icon: 'https://img.icons8.com/?size=100&id=101374&format=png&color=000000',
-      onClick: navigateToDashboard
-    },
-    {
-      name: 'Quizzes',
-      icon: 'https://img.icons8.com/?size=100&id=85500&format=png&color=000000',
-      onClick: navigateToLearnPage
-    },
-    {
-      name: 'Statistics',
-      icon: 'https://img.icons8.com/?size=100&id=43623&format=png&color=000000',
-      onClick: navigateToLearnPage
-    },
-    {
-      name: 'Settings',
-      icon: 'https://img.icons8.com/?size=100&id=2969&format=png&color=000000',
-      onClick: navigateToLearnPage
-    }
-  ]
-
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-    if (currentUser) {
-        setUsername(currentUser.displayName || " ");
-      } else {
-        setUsername("");
-      }
-  });
-  return () => unsubscribe();
-}, []);
-
-
-
-
-
-
+  // Ініціали для аватара — першa літера імені
+  const initials = username ? username[0].toUpperCase() : '?';
 
   return (
-    <div>
-      <button 
-             className={`md:hidden text-gray-900 focus:outline-none mb-4 ${isOpen ? 'hidden' : ''}`}
-             onClick={()=> setIsOpen(true)}
-          >
-            <span className="text-3xl">&#9776;</span>
-          </button>
-    <div className={`${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 fixed md:relative z-30 transition-transform duration-300 ease-in-out`}>
-      <div className='flex flex-col bg-slate-600 w-64 p-5 h-screen justify-between'>
-        <div>
-          <button 
-            className="md:hidden text-slate-200 focus:outline-none mb-4"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="text-3xl">&#9776;</span>
-          </button>
+    <>
+      {/* Кнопка бургера — тільки мобільний */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-40 p-2 bg-white rounded-lg border border-gray-200 shadow-sm"
+        onClick={() => setIsOpen(true)}
+        aria-label="Open menu"
+      >
+        <span className="block w-5 h-0.5 bg-gray-600 mb-1" />
+        <span className="block w-5 h-0.5 bg-gray-600 mb-1" />
+        <span className="block w-5 h-0.5 bg-gray-600" />
+      </button>
 
-          <div className="mb-0">
-            <h1 className="text-2xl font-bold mb-4 text-slate-200">Dashboard</h1>
-            <p className='text-slate-200 mb-2'>Welcome to your dashboard!</p>
-            <p className='text-slate-300 text-sm mb-8'>Here you can manage your quizzes, view statistics, and more.</p>
+      {/* Overlay — затемнення за навбаром на мобільному */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/40 z-30"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
-            <div className='pt-2'>
-              <h3 className='text-slate-300 font-semibold mb-4'>Main Menu</h3>
-
-              <div className='ml-2'>
-                {menuItems.map((item) => (
-                  <div 
-                    key={item.name}
-                    className={`flex flex-row items-center mt-3 p-3 rounded-lg cursor-pointer
-                             hover:bg-slate-500 hover:scale-[1.02] transition-all duration-200 ease-in-out
-                             ${activeItem === item.name ? 'bg-slate-500 scale-[1.02]' : ''}`}
-                    onClick={item.onClick} 
-                  >
-                    <img 
-                      src={item.icon} 
-                      alt={`${item.name} icon`} 
-                      className='w-5 h-5 mr-3 filter brightness-0 invert'
-                    />
-                    <a href={item.href} className='text-slate-200 hover:text-white font-medium'>
-                      {item.name}
-                    </a>
-                  </div>
-                ))}
-              </div>
+      {/* Сайдбар */}
+      <aside
+        className={`
+          fixed md:relative z-40 h-screen w-64 flex flex-col
+          bg-white border-r border-gray-100
+          transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
+      >
+        {/* Логотип */}
+        <div className="px-5 py-5 border-b border-gray-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">EL</span>
             </div>
+            <span className="text-base font-bold text-gray-900">EFFLearn</span>
           </div>
         </div>
-        <div className='border-t border-slate-500 pt-4 flex flex-row gap-10'>
-         
-          <div className='flex items-center'>
-            <div className='w-8 h-8 bg-slate-400 rounded-full mr-3'></div>
-            <div>
-              <p className='text-slate-200 text-sm font-medium'>User: {username}</p>
-              
+
+        {/* Меню */}
+        <nav className="flex-1 px-3 py-4 overflow-y-auto">
+          <p className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Menu
+          </p>
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeItem === item.name;
+
+            return (
+              <button
+                key={item.name}
+                onClick={() => {
+                  setActiveItem(item.name);
+                  item.onClick();
+                  setIsOpen(false); // закриває на мобільному після кліку
+                }}
+                className={`
+                  w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1
+                  text-sm font-medium transition-all duration-150 text-left
+                  ${isActive
+                    ? 'bg-indigo-50 text-indigo-700'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }
+                `}
+              >
+                <Icon
+                  size={18}
+                  className={isActive ? 'text-indigo-600' : 'text-gray-400'}
+                />
+                {item.name}
+                {/* Активний індикатор — тонка смужка зліва */}
+                {isActive && (
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-600" />
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Профіль + вихід */}
+        <div className="px-3 py-4 border-t border-gray-100">
+          <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gray-50">
+            {/* Аватар з ініціалами */}
+            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+              <span className="text-xs font-semibold text-indigo-700">
+                {initials}
+              </span>
             </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">
+                {username || 'Loading...'}
+              </p>
+              <p className="text-xs text-gray-400">Authorized</p>
+            </div>
+            <SignOutBtn />
           </div>
-           <SignOutBtn />
         </div>
-        
-      </div>
-    </div>
-</div>
-  )
+      </aside>
+    </>
+  );
 }
 
-export default NavBar
+export default NavBar;

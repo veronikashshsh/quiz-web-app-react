@@ -37,33 +37,32 @@ function LearnCards() {
 
   return(
 <>
- <div className='flex justify-start dark:bg-gray-700 p-3'>
- <BtnReturnToGuest/>
- </div>
-<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center p-6">
-  <h1 className="text-3xl font-extrabold mb-8 text-gray-900 dark:text-white text-center">
+ <div className='flex justify-start bg-slate-100 p-3'>
+ <BtnReturnToGuest/> 
+  <h1 className="text-2xl mb-8 text-gray-900 text-center pl-6">
     Learn Flashcards: {quiz.name}
   </h1>
-
- 
+ </div>
+<div className="min-h-screen bg-indigo-300 flex flex-col items-center justify-center p-6">
   <div 
     className="
-      border border-gray-300 dark:border-gray-700 
+      border border-gray-300
       p-8 
       rounded-lg 
       shadow-lg 
-      bg-white dark:bg-gray-800 
+      bg-white 
       text-center 
       max-w-3xl 
       w-full 
+      max-h-screen
       transition-colors
     "
   >
-    <p className="text-lg font-semibold mb-6 text-gray-800 dark:text-gray-200">
-      <span className="font-bold">Question:</span> {currentCard.question}
-    </p>
-    <p className={`text-gray-600 dark:text-gray-400 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-      <strong>Answer:</strong> {currentCard.answer}
+    <p className="text-lg font-semibold mb-6 text-gray-800">
+      <span className="font-bold">Question:</span><br/> {currentCard.question}
+    </p> 
+    <p className={`text-gray-600 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+      <strong>Answer:</strong><br/> {currentCard.answer}
     </p>
 
     <div className="flex justify-center gap-8 mt-10">

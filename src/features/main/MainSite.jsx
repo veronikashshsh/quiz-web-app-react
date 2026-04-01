@@ -1,52 +1,45 @@
-import React from 'react'
-import Header from './components/Header'
-import { useNavigate } from "react-router-dom";
-import Footer from './components/Footer';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Header from './components/Header';
 import Testimonials from './components/Testimonials';
+import Footer from './components/Footer';
+import AuthModal from '../auth/AuthModal';
+import Features from './components/Features';
+import Hero from './components/Hero';
+import Steps from './components/Steps';
+import { useAuthModal } from '../../hooks/useAuth';
+import BannerCTA from './components/BannerCTA';
 
-function MainSite() {
-
-    let navigateToGuestMode = useNavigate(); 
-     const routeChangeToGuest = () =>{ 
-       navigateToGuestMode("/guest"); 
-  }
-
-
+// initialModal — 'signin' | 'signup' | null
+// Коли юзер заходить на /login → initialModal='signin' → модал одразу відкритий
+function MainSite({ initialModal = null }) {
+  const { t } = useTranslation();
+  const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal();
   return (
-   <>
-   <Header/>
-   <div className='m-10 flex items-center flex-col p-10'>
-    <h1 className="text-[#4E5174] text-[48px] text-center">Learn effictinelly with EFFLearn<br/>
-    Structure, remind, do best</h1>
+    <>
+      <Header onSignIn={openSignIn} onSignUp={openSignUp} />
 
-   <button
-  onClick={routeChangeToGuest}
-  type="button"
-  className="
-    px-6 py-3
-    my-10
-    bg-white dark:bg-gray-800
-    text-[#959EC9] dark:text-[#b0b8d6]
-    rounded-lg
-    shadow-md
-    hover:bg-gray-200 dark:hover:bg-gray-700
-    transition-colors duration-300 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-    active:scale-95
-    "
-  aria-label="Use as a Guest"
->
-  Use as a Guest
-</button>
-   </div>
+      <AuthModal
+        isOpen={authModal.isOpen}
+        onClose={closeModal}
+        defaultTab={authModal.tab}
+      />
 
-   <div className=''>
+      {/* Hero */}
+     <Hero />
+      {/* Features */}
+      <Features />
 
-   </div>
-   <Testimonials />
-   <Footer />
-   </>
-  )
-  }
+      {/* How it works */}
+      <Steps />
+      <Testimonials />
 
-export default MainSite
+      {/* CTA Banner */}
+     <BannerCTA />
+      <Footer />
+    </>
+  );
+}
+
+export default MainSite;

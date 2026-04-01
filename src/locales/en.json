@@ -2,5 +2,66 @@
   "welcome": "Welcome!",
   "about": "About us",
   "contact": "Contact",
-  "greeting": "Hello, {{name}}!"
+  "greeting": "Hello, {{name}}!",
+
+  "nav": {
+    "features":   "Features",
+    "howItWorks": "How it works",
+    "tryFree":    "Try for free"
+  },
+  "auth": {
+    "logIn":         "Log in",
+    "createAccount": "Create account"
+  },
+
+  "hero": {
+    "badge":    "Free to use, no account required",
+    "title":    "Learn anything. Remember everything.",
+    "subtitle": "Create flashcard decks, quiz yourself, and track your progress — all in one place.",
+    "cta": {
+      "primary":   "Get started",
+      "secondary": "Try without account"
+    }
+  },
+ 
+  "features": {
+    "title":    "Everything you need to learn faster",
+    "subtitle": "Simple tools that actually work.",
+    "cards": {
+      "title": "Flashcard decks",
+      "desc":  "Create custom decks with questions and answers. Study at your own pace."
+    },
+    "progress": {
+      "title": "Track your progress",
+      "desc":  "See your success rate for every deck. Know exactly what to review next."
+    },
+    "offline": {
+      "title": "Works without account",
+      "desc":  "Start learning immediately as a guest. Create an account to sync across devices."
+    }
+  },
+ 
+  "steps": {
+    "title":    "How it works",
+    "subtitle": "Three steps to start learning effectively.",
+    "create": {
+      "title": "Create a deck",
+      "desc":  "Add a quiz with any name — English words, history dates, anything you need to memorize."
+    },
+    "learn": {
+      "title": "Add your cards",
+      "desc":  "Write questions and answers. The more specific, the better your results."
+    },
+    "track": {
+      "title": "Quiz yourself",
+      "desc":  "Test your knowledge and watch your success rate grow with every session."
+    }
+  },
+ 
+  "cta": {
+    "title":    "Ready to learn smarter?",
+    "subtitle": "Join thousands of students who use EFFLearn every day.",
+    "primary":   "Create free account",
+    "secondary": "Try as guest"
+  }
 }
