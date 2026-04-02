@@ -3,7 +3,8 @@ import {
   doc,
   setDoc,
   getDocs,
-  serverTimestamp
+  serverTimestamp,
+  deleteDoc
 } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";

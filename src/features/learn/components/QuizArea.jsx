@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import QuizCard from './QuizCard';
 import QuizEditorModal from './QuizEditorModal';
-import { createQuiz, deleteQuiz, getQuizzes } from '../../../services/quizService';
-import { Loader, LucideAArrowDown, SquareLibrary } from 'lucide-react';
+import { Loader, SquareLibrary } from 'lucide-react';
 import { useQuizzes } from '../../../hooks/useQuizzes';
 
 function QuizArea({isGuest, Rate, quizzes: propQuizzes, setQuizzes: propSetQuizzes }) {
-  const { quizzes, isLoading, error, addQuiz, removeQuiz, quizzesCount } = useQuizzes(isGuest);
+  const { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount } = useQuizzes(isGuest);
   const [showModal, setShowModal] = useState(false);
   const [quizName, setQuizName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);

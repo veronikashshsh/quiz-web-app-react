@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher"
 
-function Header() {
+function Header({onSignIn, onSignUp}) {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -54,13 +54,13 @@ function Header() {
           <div className="w-px h-5 bg-gray-200 hidden sm:block" />
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("/login")}
+              onClick={onSignIn}
               className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition"
             >
               {t("auth.logIn")}
             </button>
             <button
-              onClick={() => navigate("/register")}
+              onClick={onSignUp}
               className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
             >
               {t("auth.createAccount")}

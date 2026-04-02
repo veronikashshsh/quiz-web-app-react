@@ -27,7 +27,7 @@ function MainSite({ initialModal = null }) {
       />
 
       {/* Hero */}
-     <Hero />
+     <Hero onSignUp={openSignUp}/>
       {/* Features */}
       <Features />
 
