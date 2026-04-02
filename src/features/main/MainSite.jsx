@@ -15,7 +15,7 @@ import BannerCTA from './components/BannerCTA';
 // Коли юзер заходить на /login → initialModal='signin' → модал одразу відкритий
 function MainSite({ initialModal = null }) {
   const { t } = useTranslation();
-  const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal();
+  const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal(initialModal);
   return (
     <>
       <Header onSignIn={openSignIn} onSignUp={openSignUp} />

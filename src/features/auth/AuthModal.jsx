@@ -1,11 +1,4 @@
-import { useState } from 'react';
-import { auth, googleProvider } from '../../../config/firebase';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signInWithPopup,
-} from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import SignInForm from './components/SignInForm';
 import SignUpForm from './components/SignUpForm';
@@ -14,7 +7,7 @@ import SignUpForm from './components/SignUpForm';
 function AuthModal({ isOpen, onClose, defaultTab = 'signin' }) {
   const [tab, setTab] = useState(defaultTab);
 
-  useState(() => {
+  useEffect(() => {
     setTab(defaultTab);
   }, [defaultTab]);
 

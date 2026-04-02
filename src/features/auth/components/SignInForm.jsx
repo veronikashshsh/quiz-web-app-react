@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from "./GoogleButton";
 import Divider from "./Divider";
 import Field from "./Field";
+import { auth, googleProvider } from "../../../../config/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 function SignInForm({ onSuccess, onSwitchToSignUp }) {
   const [email, setEmail] = useState('');
@@ -20,7 +22,6 @@ function SignInForm({ onSuccess, onSwitchToSignUp }) {
       onSuccess();
       navigate(`/dashboard/${auth.currentUser.displayName}`);
     } catch (err) {
-      // Firebase повертає технічні повідомлення — замінюємо на зрозумілі
       setError('Invalid email or password. Please try again.');
     } finally {
       setLoading(false);

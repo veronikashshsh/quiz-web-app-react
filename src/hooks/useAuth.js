@@ -6,7 +6,7 @@ export function useAuthModal(initialModal) {
   const navigate = useNavigate();
 
   const [authModal, setAuthModal] = useState({
-    isOpen: initialModal !== null,
+    isOpen: initialModal != null,
     tab: initialModal ?? 'signin',
   });
 
