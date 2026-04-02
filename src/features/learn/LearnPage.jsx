@@ -5,11 +5,9 @@ import QuizArea from './components/QuizArea'
 
 const LearnPage = () => {
   return (
-    <div className='flex'>
-      <div className='w-64'>
+    <div className='flex h-screen bg-gray-100'>
         <NavBar />
-        </div>
-        <div className='flex-1'>
+        <div className='flex-1 p-2'>
        <QuizArea isGuest={false}/>
        </div>
     </div>

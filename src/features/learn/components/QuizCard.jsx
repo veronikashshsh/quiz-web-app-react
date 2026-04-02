@@ -1,11 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Rate приходить з props — картка не зберігає дані, вона тільки відображає
-// Локальний useState тут зайвий — дані живуть в QuizArea
 function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Колір індикатора залежить від відсотку успішності
   function getRateColor(rate) {
     if (rate >= 70) return 'bg-emerald-500';
     if (rate >= 40) return 'bg-amber-400';
@@ -21,7 +20,6 @@ function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-indigo-200 hover:shadow-sm transition group">
 
-      {/* Top row — назва і кнопка видалення */}
       <div className="flex items-start justify-between gap-2">
         <h2 className="text-base font-semibold text-gray-900 leading-tight">
           {cardName}
@@ -69,7 +67,20 @@ function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
           Start
         </button>
       </div>
+
+      {isLoading && (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {[1, 2, 3].map((i) => (
+      <div
+        key={i}
+        className="h-32 bg-gray-100 rounded-2xl animate-pulse"
+      />
+    ))}
+  </div>
+)}
     </div>
+
+    
   );
 }
 

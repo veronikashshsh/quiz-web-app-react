@@ -1,12 +1,13 @@
 import Header from '../main/components/Header';
 import QuizArea from '../learn/components/QuizArea';
 import BtnToMain from '../../components/BtnToMain';
+import { useAuthModal } from '../../hooks/useAuth';
 
-function GuestMode() {
-  
+function GuestMode({ initialModal = null }) {
+   const { openSignIn, openSignUp} = useAuthModal(initialModal);
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
+      <Header onSignIn={openSignIn} onSignUp={openSignUp}/>
 
       {/* Banner */}
       <div className="bg-indigo-50 border-b border-indigo-100 px-6 py-3">

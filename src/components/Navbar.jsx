@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import {
@@ -10,28 +10,27 @@ import {
 } from 'lucide-react';
 import SignOutBtn from '../features/auth/components/SignOutBtn';
 
-// Дані винесені окремо — той самий патерн що FEATURES і STEPS
-// Щоб додати пункт меню — додаєш один об'єкт, не чіпаєш JSX
-const getMenuItems = (navigate, username) => [
+
+const MENU_ITEMS = [
   {
     name: 'Dashboard',
     icon: LayoutDashboard,
-    onClick: () => navigate(`/dashboard/${username}`),
+    path: '/dashboard',   
   },
   {
     name: 'Quizzes',
     icon: BookOpen,
-    onClick: () => navigate(`/userquizarea/${username}`),
+    path: '/userquizarea',
   },
   {
     name: 'Statistics',
     icon: BarChart2,
-    onClick: () => navigate(`/stats/${username}`),
+    path: '/stats',
   },
   {
     name: 'Settings',
     icon: Settings,
-    onClick: () => navigate(`/settings/${username}`),
+    path: '/settings',
   },
 ];
 
@@ -40,6 +39,7 @@ function NavBar() {
   const [user, setUser] = useState(null);
   const [activeItem, setActiveItem] = useState('Dashboard');
   const navigate = useNavigate();
+  const location = useLocation(); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -48,18 +48,24 @@ function NavBar() {
     return () => unsubscribe();
   }, []);
 
-  // username береться з user — не потрібен окремий useState
   const username = user?.displayName || '';
-  const menuItems = getMenuItems(navigate, username);
 
-  // Ініціали для аватара — першa літера імені
   const initials = username ? username[0].toUpperCase() : '?';
+
+  function isActive(path) {
+    return location.pathname.includes(path);
+  }
+
+  function handleNavigate(path) {
+    navigate(`${path}/${username}`);
+    setIsOpen(false); // закриваємо мобільне меню після кліку
+  }
 
   return (
     <>
       {/* Кнопка бургера — тільки мобільний */}
       <button
-        className="md:hidden fixed top-4 left-4 z-40 p-2 bg-white rounded-lg border border-gray-200 shadow-sm"
+        className="md:hidden fixed top-1 left-4 z-40 p-2 bg-white rounded-lg border border-gray-200 shadow-sm"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
       >
@@ -77,13 +83,14 @@ function NavBar() {
       )}
 
       {/* Сайдбар */}
-      <aside
+       <aside
         className={`
-          fixed md:relative z-40 h-screen w-64 flex flex-col
+          fixed md:sticky md:top-0 z-40 h-screen w-64 flex flex-col shrink-0
           bg-white border-r border-gray-100
           transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
+        // ↑ md:sticky + md:top-0 — на десктопі сайдбар липне до верху при скролі
       >
         {/* Логотип */}
         <div className="px-5 py-5 border-b border-gray-100">
@@ -100,18 +107,14 @@ function NavBar() {
           <p className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
             Menu
           </p>
-          {menuItems.map((item) => {
+          {MENU_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeItem === item.name;
 
             return (
               <button
                 key={item.name}
-                onClick={() => {
-                  setActiveItem(item.name);
-                  item.onClick();
-                  setIsOpen(false); // закриває на мобільному після кліку
-                }}
+                onClick={() => handleNavigate(item.path)}
                 className={`
                   w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1
                   text-sm font-medium transition-all duration-150 text-left

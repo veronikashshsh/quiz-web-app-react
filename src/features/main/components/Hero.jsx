@@ -1,12 +1,8 @@
-
-import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { useAuthModal } from '../../../hooks/useAuth';
 import { useNavigate, useNavigation } from 'react-router-dom';
 
-function Hero() {
+function Hero({onSignUp}) {
      const { t } = useTranslation();
-    const { openSignUp } = useAuthModal();
     const navigate = useNavigate()
   return (
      <section className="max-w-6xl mx-auto px-6 pt-20 pb-24 text-center">
@@ -21,7 +17,7 @@ function Hero() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
-            onClick={openSignUp}
+            onClick={onSignUp}
             className="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl transition"
           >
             {t("hero.cta.primary")}

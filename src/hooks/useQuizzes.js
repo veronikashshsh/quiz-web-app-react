@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createQuiz, getQuizzes } from "../services/quizService";
+import { createQuiz, getQuizzes, deleteQuiz as deleteQuizFromDB } from "../services/quizService";
 
 
 
@@ -53,14 +53,16 @@ async function addQuiz(name) {
         setQuizzes(updated);
         localStorage.setItem('quizzes', JSON.stringify(updated));
     } else {
+        const tempQuiz = { id: `temp-${Date.now()}`, name, successRate: 0, flashcards: [] };
+        setQuizzes([...quizzes, tempQuiz]); // optimistic update
+
         try {
             await createQuiz(name);
             await loadFromFirebase();
         } catch (err) {
             console.error("Error while creating quiz", err);
             setError("Failed to create quiz. Please try again.");
-        } finally {
-            setIsLoading(false);
+            setQuizzes(quizzes); // rollback on error
         }
     }
 }
@@ -71,16 +73,17 @@ async function deleteQuiz(quizId, index) {
         setQuizzes(updated);
         localStorage.setItem('quizzes', JSON.stringify(updated));
     } else {
-        setIsLoading(true);
+        const previous = quizzes;
+        setQuizzes(quizzes.filter(q => q.id !== quizId)); // optimistic update
+
         try{
-            await deleteQuiz(quizId);
-            await loadFromFirebase();
+            await deleteQuizFromDB(quizId);
+           // await loadFromFirebase();
         } catch (err) {
             console.error("Error while deleting quiz", err);
             setError("Failed to delete quiz. Please try again.");
-        } finally {
-            setIsLoading(false);
-        }
+            setQuizzes(previous); // rollback on error
+        } 
     }
 }
 
