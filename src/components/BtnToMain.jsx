@@ -1,29 +1,29 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 function BtnToMain() {
-    let navigateToMainPage = useNavigate(); 
-     const routeChangeToMain = () =>{ 
-       navigateToMainPage("/"); 
-  }
-
+  const navigate = useNavigate();
 
   return (
-    <div>
-        <button
-        onClick={routeChangeToMain}
-        type="button"
-        className="
-           flex items-center justify-center
-          w-8 h-8
-         px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-sm font-semibold rounded-lg transition
-          "
-        aria-label="Return to main page"
-      >
-        ←
-      </button>
-    </div>
-  )
+    <button
+      onClick={() => navigate("/")}
+      type="button"
+      className="
+        flex items-center justify-center
+        w-10 h-10
+        rounded-full
+        bg-white/80 backdrop-blur
+        text-gray-700
+        shadow-sm
+        hover:bg-white hover:shadow-md
+        active:scale-95
+        transition
+      "
+      aria-label="Return to main page"
+    >
+      ←
+    </button>
+  );
 }
 
-export default BtnToMain
+export default BtnToMain;

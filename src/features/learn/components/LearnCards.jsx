@@ -35,57 +35,69 @@ function LearnCards() {
     setIsVisible(false);
   };
 
-  return(
-<>
- <div className='flex justify-start bg-slate-100 p-3'>
- <BtnReturnToGuest/> 
-  <h1 className="text-2xl mb-8 text-gray-900 text-center pl-6">
-    Learn Flashcards: {quiz.name}
-  </h1>
- </div>
-<div className="min-h-screen bg-indigo-300 flex flex-col items-center justify-center p-6">
-  <div 
-    className="
-      border border-gray-300
-      p-8 
-      rounded-lg 
-      shadow-lg 
-      bg-white 
-      text-center 
-      max-w-3xl 
-      w-full 
-      max-h-screen
-      transition-colors
-    "
-  >
-    <p className="text-lg font-semibold mb-6 text-gray-800">
-      <span className="font-bold">Question:</span><br/> {currentCard.question}
-    </p> 
-    <p className={`text-gray-600 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-      <strong>Answer:</strong><br/> {currentCard.answer}
-    </p>
-
-    <div className="flex justify-center gap-8 mt-10">
-      <button
-        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 text-white font-semibold rounded-md transition-colors"
-        onClick={() => setIsVisible(prev => !prev)}
-        aria-pressed={isVisible}
-        aria-label={isVisible ? "Hide answer" : "Show answer"}
-      >
-        {isVisible ? 'Hide Answer' : 'Show Answer'}
-      </button>
-
-      <button
-        className="px-6 py-3 bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 text-white font-semibold rounded-md transition-colors"
-        onClick={nextCard}
-        aria-label="Next flashcard"
-      >
-        Next Card
-      </button>
+ return (
+  <>
+    {/* Header */}
+    <div className="flex items-center gap-4 bg-white/80 backdrop-blur border-b px-6 py-3 shadow-sm">
+      <BtnReturnToGuest />
+      <h1 className="text-xl font-semibold text-gray-800">
+        {quiz.name}
+      </h1>
     </div>
-  </div>
-</div>
-</>
+
+    {/* Main */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 p-6">
+      
+      <div className="w-full max-w-2xl">
+
+        {/* Progress */}
+        <div className="text-center text-white mb-4 text-sm opacity-80">
+          Card {currentIndex + 1} / {quiz.flashcards.length}
+        </div>
+
+        {/* Card */}
+        <div className="relative bg-white rounded-2xl shadow-2xl p-10 text-center transition-all duration-300">
+
+          {/* Question */}
+          <p className="text-xl font-semibold text-gray-800 mb-6">
+            {currentCard.question}
+          </p>
+
+          {/* Divider */}
+          <div className="h-px bg-gray-200 my-4" />
+
+          {/* Answer */}
+          <p
+            className={`text-gray-600 transition-all duration-300 ${
+              isVisible
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 -translate-y-2 h-0 overflow-hidden'
+            }`}
+          >
+            {currentCard.answer}
+          </p>
+
+          {/* Buttons */}
+          <div className="flex justify-center gap-4 mt-10">
+            <button
+              onClick={() => setIsVisible(prev => !prev)}
+              className="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium shadow-md transition"
+            >
+              {isVisible ? 'Hide' : 'Show'}
+            </button>
+
+            <button
+              onClick={nextCard}
+              className="px-6 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium shadow-md transition"
+            >
+              Next →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </>
   )}
   
 

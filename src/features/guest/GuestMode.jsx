@@ -26,7 +26,7 @@ function GuestMode() {
 
       {/* Content */}
       <div className="flex-grow">
-        <QuizArea />
+        <QuizArea isGuest={true}/>
       </div>
     </div>
   );

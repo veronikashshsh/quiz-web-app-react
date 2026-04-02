@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import QuizCard from './QuizCard';
 import QuizEditorModal from './QuizEditorModal';
+import { createQuiz, deleteQuiz, getQuizzes } from '../../../services/quizService';
+import { Loader, LucideAArrowDown, SquareLibrary } from 'lucide-react';
+import { useQuizzes } from '../../../hooks/useQuizzes';
 
-function QuizArea({ Rate }) {
-  const [quizzes, setQuizzes] = useState([]);
+function QuizArea({isGuest, Rate, quizzes: propQuizzes, setQuizzes: propSetQuizzes }) {
+  const { quizzes, isLoading, error, addQuiz, removeQuiz, quizzesCount } = useQuizzes(isGuest);
   const [showModal, setShowModal] = useState(false);
   const [quizName, setQuizName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,56 +17,22 @@ function handleEdit(quizName) {
   setIsModalOpen(true);
 }
 
-  useEffect(() => {
-    try {
-      const item = localStorage.getItem('quizzes');
-      if (item && item !== 'undefined') {
-        const parsed = JSON.parse(item);
-        if (Array.isArray(parsed)) {
-          setQuizzes(parsed);
-        } else {
-          setQuizzes([]);
-          localStorage.removeItem('quizzes');
-        }
-      } else {
-        setQuizzes([]);
-      }
-    } catch (error) {
-      console.error('Error reading quizzes from localStorage:', error);
-      setQuizzes([]);
-      localStorage.removeItem('quizzes');
-    }
-  }, []);
-
-  const handleAddQuiz = () => {
-    if (quizName.trim() === '') return;
-    const newQuiz = { name: quizName.trim(), successRate: Rate, flashcards: [] };
-    const updated = [...quizzes, newQuiz];
-    setQuizzes(updated);
-    localStorage.setItem('quizzes', JSON.stringify(updated));
-    setQuizName('');
-    setShowModal(false);
-  };
-
-  const deleteQuiz = (indexToDelete) => {
-    setQuizzes((prev) => {
-      const updated = prev.filter((_, i) => i !== indexToDelete);
-      localStorage.setItem('quizzes', JSON.stringify(updated));
-      return updated;
-    });
-  };
+async function handleAddQuiz(){
+  if(quizName.trim() === '') return;
+  await addQuiz(quizName.trim());
+  setQuizName('');
+  setShowModal(false);
+}
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
-
-      {/* Page header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
             My Quizzes
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {quizzes.length} {quizzes.length === 1 ? 'quiz' : 'quizzes'}
+            {quizzesCount} {quizzesCount === 1 ? 'quiz' : 'quizzes'}
           </p>
         </div>
         <button
@@ -76,11 +45,10 @@ function handleEdit(quizName) {
         </button>
       </div>
 
-      {/* Empty state */}
-      {quizzes.length === 0 && (
+      {isLoading && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
-            <span className="text-2xl">📋</span>
+            <span className="text-2xl"><Loader/></span>
           </div>
           <p className="text-gray-700 font-medium mb-1">No quizzes yet</p>
           <p className="text-sm text-gray-400">
@@ -89,27 +57,43 @@ function handleEdit(quizName) {
         </div>
       )}
 
+       {error && (
+        <div className="text-center py-10 text-red-500 text-sm">{error}</div>
+      )}
+
+      {!isLoading && !error && quizzes.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
+            <span className="text-2xl"><SquareLibrary/></span>
+          </div>
+          <p className="text-gray-700 font-medium mb-1">No quizzes yet</p>
+          <p className="text-sm text-gray-400">Create your first quiz to start learning</p>
+        </div>
+      )}
+
       {/* Quiz grid */}
+      {!isLoading && (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {quizzes.map((quiz, index) => (
+        {quizzes?.map((quiz, index) => (
           <QuizCard
-            key={index}
+            key={quiz.id ?? index}
             cardName={quiz.name}
             successRate={quiz.successRate}
-            onDelete={() => deleteQuiz(index)}
+            onDelete={() => deleteQuiz(quiz.id, index)}
             onEdit={handleEdit}
           />
         ))}
       </div>
+      )}
 
       {isModalOpen && (
-  <QuizEditorModal
-    quizName={selectedQuiz}
-    onClose={() => setIsModalOpen(false)}
-  />
-)}
+        <QuizEditorModal
+        quizName={selectedQuiz}
+        onClose={() => setIsModalOpen(false)}
+      />
+      )}
 
-      {/* Modal */}
+
       {showModal && (
         <div
           className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
