@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../../../config/firebase';
 import { BookOpen, BarChart2, Plus, ArrowRight } from 'lucide-react';
 import { STATS } from '../../../data/statsData';
-
-// Статичні дані — в реальному проєкті прийдуть з БД/props
-// Поки хардкод — але структура готова до заміни на реальні дані
+import { auth } from '../../../../config/firebase';
 
 function MainContent() {
   const navigate = useNavigate();
