@@ -1,7 +1,9 @@
+import { BarChart, CardSim, Globe } from "lucide-react";
+
 export const FEATURES = [
-  { icon: "🗂", titleKey: "features.cards.title", descKey: "features.cards.desc" },
-  { icon: "📊", titleKey: "features.progress.title", descKey: "features.progress.desc" },
-  { icon: "🌐", titleKey: "features.offline.title", descKey: "features.offline.desc" },
+  { icon: CardSim, titleKey: "features.cards.title", descKey: "features.cards.desc" },
+  { icon: BarChart, titleKey: "features.progress.title", descKey: "features.progress.desc" },
+  { icon: Globe, titleKey: "features.offline.title", descKey: "features.offline.desc" },
 ];
 
 export const STEPS = [

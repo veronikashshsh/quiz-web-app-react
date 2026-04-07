@@ -25,8 +25,6 @@ function Header({onSignIn, onSignUp}) {
           </span>
         </button>
 
-        {/* Навігаційні посилання — центр */}
-        {/* hidden md:flex — ховаємо на мобільному, показуємо від md (768px) */}
         <div className="hidden md:flex items-center gap-1">
           <button
             onClick={() => scrollTo("features")}
@@ -48,9 +46,7 @@ function Header({onSignIn, onSignUp}) {
           </button>
         </div>
 
-        {/* Права частина */}
         <div className="flex items-center gap-3 shrink-0">
-          <LanguageSwitcher />
           <div className="w-px h-5 bg-gray-200 hidden sm:block" />
           <div className="flex items-center gap-2">
             <button
