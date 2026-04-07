@@ -11,13 +11,14 @@ import Steps from './components/Steps';
 import { useAuthModal } from '../../hooks/useAuth';
 import BannerCTA from './components/BannerCTA';
 
-// initialModal — 'signin' | 'signup' | null
-// Коли юзер заходить на /login → initialModal='signin' → модал одразу відкритий
 function MainSite({ initialModal = null }) {
   const { t } = useTranslation();
   const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal(initialModal);
   return (
     <>
+     <div className="absolute -top-[10%] -right-[0%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+  
+      <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
       <Header onSignIn={openSignIn} onSignUp={openSignUp} />
 
       <AuthModal
@@ -25,17 +26,11 @@ function MainSite({ initialModal = null }) {
         onClose={closeModal}
         defaultTab={authModal.tab}
       />
-
-      {/* Hero */}
+      
      <Hero onSignUp={openSignUp}/>
-      {/* Features */}
       <Features />
-
-      {/* How it works */}
       <Steps />
       <Testimonials />
-
-      {/* CTA Banner */}
      <BannerCTA />
       <Footer />
     </>

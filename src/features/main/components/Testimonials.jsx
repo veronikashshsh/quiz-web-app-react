@@ -6,13 +6,13 @@ import { TESTIMONIALS } from '../../../data/landingData'
 
 function Testimonials() {
     return (
-        <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
+        <section id="testimonials" className="py-32 px-4 sm:px-6 lg:px-8 bg-white/50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
             What Our Learners Say
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Join thousands of successful learners who have transformed their education with EFFLearn.
           </p>
         </div>
