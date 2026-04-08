@@ -16,6 +16,7 @@ function MainSite({ initialModal = null }) {
   const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal(initialModal);
   return (
     <>
+    <div className='relative overflow-hidden min-h-screen'>
      <div className="absolute -top-[10%] -right-[0%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
   
       <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
@@ -33,6 +34,7 @@ function MainSite({ initialModal = null }) {
       <Testimonials />
      <BannerCTA />
       <Footer />
+      </div>
     </>
   );
 }

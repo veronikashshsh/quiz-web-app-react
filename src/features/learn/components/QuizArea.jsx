@@ -4,15 +4,15 @@ import QuizEditorModal from './QuizEditorModal';
 import { Loader, SquareLibrary } from 'lucide-react';
 import { useQuizzes } from '../../../hooks/useQuizzes';
 
-function QuizArea({isGuest, Rate, quizzes: propQuizzes, setQuizzes: propSetQuizzes }) {
+function QuizArea({isGuest, quiz }) {
   const { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount } = useQuizzes(isGuest);
   const [showModal, setShowModal] = useState(false);
   const [quizName, setQuizName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 const [selectedQuiz, setSelectedQuiz] = useState(null);
 
-function handleEdit(quizName) {
-  setSelectedQuiz(quizName);
+function handleEdit(quiz) {
+  setSelectedQuiz(quiz);
   setIsModalOpen(true);
 }
 
@@ -75,11 +75,12 @@ async function handleAddQuiz(){
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {quizzes?.map((quiz, index) => (
           <QuizCard
-            key={quiz.id ?? index}
-            cardName={quiz.name}
-            successRate={quiz.successRate}
-            onDelete={() => deleteQuiz(quiz.id, index)}
-            onEdit={handleEdit}
+             key={quiz.id ?? index}
+             cardName={quiz.name}
+             quiz={quiz}           
+             onDelete={() => deleteQuiz(quiz.id, index)}
+             onEdit={() => handleEdit(quiz)} 
+              successRate={quiz.successRate || 0} 
           />
         ))}
       </div>
@@ -87,8 +88,10 @@ async function handleAddQuiz(){
 
       {isModalOpen && (
         <QuizEditorModal
-        quizName={selectedQuiz}
+        quiz={selectedQuiz}
+         isGuest={isGuest}  
         onClose={() => setIsModalOpen(false)}
+
       />
       )}
 
