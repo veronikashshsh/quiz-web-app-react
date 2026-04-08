@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
+function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
 
@@ -41,7 +41,6 @@ function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
             {successRate}%
           </span>
         </div>
-        {/* Прогрес-бар — набагато наочніше ніж просто текст */}
         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-500 ${getRateColor(successRate)}`}
@@ -50,17 +49,16 @@ function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
         </div>
       </div>
 
-      {/* Actions */}
       <div className="flex gap-2 pt-1">
         <button
-          onClick={() => onEdit(cardName)}
+          onClick={() => onEdit({id: quiz.id, name: cardName})}
           aria-label="Edit quiz"
           className="flex-1 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition"
         >
           Edit
         </button>
         <button
-          onClick={() => navigate(`/quiz/${cardName}`)}
+         onClick={() => navigate(`/quiz/${quiz.id}`)} 
           aria-label="Start quiz"
           className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
         >
@@ -68,16 +66,6 @@ function QuizCard({ cardName, successRate = 0, onDelete, onEdit }) {
         </button>
       </div>
 
-      {isLoading && (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    {[1, 2, 3].map((i) => (
-      <div
-        key={i}
-        className="h-32 bg-gray-100 rounded-2xl animate-pulse"
-      />
-    ))}
-  </div>
-)}
     </div>
 
     

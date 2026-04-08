@@ -1,56 +1,44 @@
 import { useState, useEffect } from 'react';
+import { updateFlashcards } from '../services/quizService';
 
-// Одне місце для всієї роботи з localStorage
-// Якщо завтра перейдеш на БД — міняєш тільки цей файл
-function saveQuizzesToStorage(quizzes) {
-  localStorage.setItem('quizzes', 
-    JSON.stringify(quizzes));// зберігаємо масив квізів як JSON-рядок
-}
-
-function loadQuizzesFromStorage() {
-  return JSON.parse(localStorage.
-    getItem('quizzes')) || []; // повертаємо масив квізів або порожній масив, якщо нічого не знайдено
-}
-
-// Хук приймає назву квізу і повертає все що потрібно компоненту
-// Компонент не знає про localStorage — це не його справа
-export function useQuizEditor(quizName) {
-  const [quiz, setQuiz] = useState(null);
+export function useQuizEditor(quiz, isGuest) {
+  const [localQuiz, setLocalQuiz] = useState(quiz);
 
   useEffect(() => {
-    const all = loadQuizzesFromStorage();
-    const found = all.find // знаходимо квіз з потрібною назвою
-    ((q) => q.name === quizName);
-    setQuiz(found || null);
-  }, [quizName]);
+    setLocalQuiz(quiz);
+  }, [quiz]);
 
-  // Приватна функція — оновлює квіз в storage і в state одночасно
-  // Компонент не повторює цей патерн двічі
-  function persistQuiz(updatedQuiz) {
-    const all = loadQuizzesFromStorage();
-    const updatedAll = all.map // map замінює старий квіз на оновлений, якщо назви співпадають
-    ((q) => (q.name === updatedQuiz.name ? updatedQuiz : q));
-    saveQuizzesToStorage(updatedAll);
-    setQuiz(updatedQuiz);
+  async function addFlashcard(question, answer) {
+    if(!question.trim() || !answer.trim()) return false;
+
+    const newCard = { question:question.trim(), answer: answer.trim() };
+    const updated = [...localQuiz.flashcards, newCard]; // Створюємо новий масив з доданою карткою
+
+    setLocalQuiz({ ...localQuiz, flashcards: updated }); // Оновлюємо стан з новим масивом карток
+    
+    if(isGuest) {
+      const all = JSON.parse(localStorage.getItem('quizzes')) || [];
+      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); // Оновлюємо масив квізів в localStorage
+      localStorage.setItem('quizzes', JSON.stringify(newAll));
+    } else {
+      await updateFlashcards(localQuiz.id, updated); // Оновлюємо дані на сервері
+    }  
+
+    return true;
   }
 
-  function addFlashcard(question, answer) {
-    if (!question.trim() || !answer.trim()) return false; // false = не додано
-    const updatedQuiz = {
-      ...quiz,
-      flashcards: [...quiz.flashcards, { question, answer }],
-    };
-    persistQuiz(updatedQuiz);
-    return true; // true = успішно додано
-  }
+  async function deleteFlashcard(index) {
+    const updated = localQuiz.flashcards.filter((_, i) => i !== index); // Створюємо новий масив без видаленої картки
+    setLocalQuiz({ ...localQuiz, flashcards: updated }); // Оновлюємо стан з новим масивом карток
 
-  function deleteFlashcard(indexToDelete) {
-    const updatedQuiz = {
-      ...quiz,
-      flashcards: quiz.flashcards.filter((_, i) => i !== indexToDelete),
-    };
-    persistQuiz(updatedQuiz);
-  }
+    if(isGuest) {
+      const all = JSON.parse(localStorage.getItem('quizzes')) || []; // Отримуємо всі квізи з localStorage
+      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); // Оновлюємо масив квізів в localStorage
+      localStorage.setItem('quizzes', JSON.stringify(newAll)); // Зберігаємо оновлений масив квізів в localStorage
+    } else {
+      await updateFlashcards(localQuiz.id, updated); // Оновлюємо дані на сервері
+    }
 
-  return { quiz, addFlashcard, deleteFlashcard };
+  }
+   return { localQuiz, addFlashcard, deleteFlashcard };
 }
