@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
+  const { t } = useTranslation();
 
   function getRateColor(rate) {
     if (rate >= 70) return 'bg-emerald-500';
@@ -36,7 +38,7 @@ function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
       {/* Success rate */}
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-400 font-medium">Success rate</span>
+          <span className="text-xs text-gray-400 font-medium"> {t('quiz.successRate')}</span>
           <span className={`text-xs font-semibold ${getRateTextColor(successRate)}`}>
             {successRate}%
           </span>
@@ -55,14 +57,14 @@ function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
           aria-label="Edit quiz"
           className="flex-1 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition"
         >
-          Edit
+           {t('quiz.editQuiz')}
         </button>
         <button
          onClick={() => navigate(`/quiz/${quiz.id}`)} 
           aria-label="Start quiz"
           className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
         >
-          Start
+          {t('quiz.startLearning')}
         </button>
       </div>
 

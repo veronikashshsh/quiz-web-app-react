@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useQuizEditor } from "../../../hooks/useQuizEditor";
+import { useTranslation } from "react-i18next";
 
 function QuizEditorModal({ quiz, isGuest, onClose }) {
   const { localQuiz, addFlashcard, deleteFlashcard } = useQuizEditor(quiz, isGuest);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const { t } = useTranslation();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -37,18 +39,18 @@ function QuizEditorModal({ quiz, isGuest, onClose }) {
             <input
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Question"
+              placeholder={t('quiz.editModal.question')}
               className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10"
             />
             <input
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              placeholder="Answer"
+              placeholder={t('quiz.editModal.answer')}
               className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10"
             />
           </div>
           <button type="submit" className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition active:scale-95">
-            + Add card
+            + {t('quiz.createQuiz')}
           </button>
         </form>
 

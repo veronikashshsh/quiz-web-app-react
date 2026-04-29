@@ -1,19 +1,19 @@
 import React from 'react'
 import { Star, Quote } from 'lucide-react'
 import { TESTIMONIALS } from '../../../data/landingData'
-
-
+import { useTranslation } from 'react-i18next'
 
 function Testimonials() {
+const { t } = useTranslation();
     return (
         <section id="testimonials" className="py-32 px-4 sm:px-6 lg:px-8 bg-white/50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
-            What Our Learners Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Join thousands of successful learners who have transformed their education with EFFLearn.
+            {t('testimonials.subtitle')}
           </p>
         </div>
         
@@ -32,8 +32,8 @@ function Testimonials() {
                   className="w-16 h-16 rounded-full object-cover mr-4"
                 />
                 <div>
-                  <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-gray-600 text-sm">{testimonial.role}</p>
+                  <h4 className="font-semibold text-gray-900">{t(testimonial.name)}</h4>
+                  <p className="text-gray-600 text-sm">{t(testimonial.role)}</p>
                 </div>
               </div>
               
@@ -44,7 +44,7 @@ function Testimonials() {
               </div>
               
               <p className="text-gray-700 leading-relaxed">
-                "{testimonial.text}"
+                "{t(testimonial.text)}"
               </p>
             </div>
           ))}

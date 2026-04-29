@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react"; 
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../../../components/LanguageSwitcher";
 
 function Header({ onSignIn, onSignUp }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +27,10 @@ function Header({ onSignIn, onSignUp }) {
             <button onClick={() => scrollTo("features")} className="px-3 py-2 text-sm text-gray-500 hover:text-gray-900 transition">{t("nav.features")}</button>
             <button onClick={() => scrollTo("how-it-works")} className="px-3 py-2 text-sm text-gray-500 hover:text-gray-900 transition">{t("nav.howItWorks")}</button>
             <button onClick={() => navigate("/guest")} className="px-3 py-2 text-sm text-gray-500 hover:text-gray-900 transition">{t("nav.tryFree")}</button>
+             <LanguageSwitcher />
           </div>
+
+         
 
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2">
@@ -48,6 +52,7 @@ function Header({ onSignIn, onSignUp }) {
             <button onClick={() => scrollTo("features")} className="text-left py-2 text-gray-600">{t("nav.features")}</button>
             <button onClick={() => scrollTo("how-it-works")} className="text-left py-2 text-gray-600">{t("nav.howItWorks")}</button>
             <button onClick={() => navigate("/guest")} className="text-left py-2 text-gray-600 font-medium">{t("nav.tryFree")}</button>
+             <LanguageSwitcher />
             <hr border-gray-50 />
             <div className="grid grid-cols-2 gap-3">
               <button onClick={() => { onSignIn(); setIsMenuOpen(false); }} className="py-3 text-sm font-medium text-gray-600 bg-gray-50 rounded-xl">{t("auth.logIn")}</button>

@@ -1,7 +1,10 @@
 import React from 'react'
 import { BookOpen, Twitter, Facebook, Instagram, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="bg-white text-black border-t  border-gray-300 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -12,24 +15,23 @@ function Footer() {
               <span className="text-2xl font-bold">EFFLearn</span>
             </div>
             <p className="text-gray-700 leading-relaxed">
-              Empowering learners worldwide with effective, structured, and engaging educational experiences.
+              {t("footer.sentence")}
             </p>
           </div>
           
           
           
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t("footer.nav.company")}</h4>
             <ul className="space-y-2 text-gray-700">
-              <li><a href="#" className="hover:text-slate-200 transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-slate-200 transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-slate-200 transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-slate-200 transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-slate-200 transition-colors">{t("footer.nav.home")}</a></li>
+              <li><a href="#features" className="hover:text-slate-200 transition-colors">{t("footer.nav.features")}</a></li>
+              <li><a href="#about" className="hover:text-slate-200 transition-colors">{t("footer.nav.about")}</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
+            <h4 className="font-semibold mb-4">{t("footer.nav.connect")}</h4>
             <div className="flex space-x-4 mb-4">
               <Twitter className="w-6 h-6 text-gray-700 hover:text-slate-200 cursor-pointer transition-colors" />
               <Facebook className="w-6 h-6 text-gray-700 hover:text-slate-200 cursor-pointer transition-colors" />
@@ -37,7 +39,7 @@ function Footer() {
               <Mail className="w-6 h-6 text-gray-700 hover:text-slate-200 cursor-pointer transition-colors" />
             </div>
             <p className="text-gray-700 text-sm">
-              Subscribe to our newsletter for learning tips and updates.
+             {t("footer.subscripe")}
             </p>
           </div>
         </div>
