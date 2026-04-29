@@ -63,5 +63,67 @@
     "subtitle": "Join thousands of students who use EFFLearn every day.",
     "primary":   "Create free account",
     "secondary": "Try as guest"
+  },
+  "testimonials": {
+    "title": "What our users say",
+    "subtitle": "Experience of students who use EFFLearn.",
+    "users": [
+      {
+        "name": "Sarah Johnson",
+        "role": "Medical student",
+        "feedback": "EFFLearn helps me prepare for exams. I create flashcards with terms and definitions, then test myself. It really improves my memory."
+      },
+      {
+        "name": "Michael Chen",
+        "role": "Software developer",
+        "feedback": "EFFLearn helps me learn new technologies. I create flashcards with code and concepts, then test myself. It makes the learning process more interactive and effective."
+      },
+        {
+          "name": "Emma Rodriguez",
+          "role": "Philology student",
+          "feedback": "I use EFFLearn to study foreign languages. I create flashcards with new words and phrases, then test myself. It helps me quickly memorize new vocabulary."
+        }
+    ]
+
+  },
+
+  "footer": {
+    "sentence": "Empowering learners worldwide with effective, structured, and engaging educational experiences.",
+    "copyright": "© 2026 EFFLearn.",
+    "rights": "All rights reserved. Made with soul and several cups of coffee.",
+    "subscripe": "Subscribe to our newsletter for updates and tips.", 
+    "nav": {
+      "company": "Company",
+      "home": "Home",
+      "features": "Features",
+      "about": "About",
+      "contact": "Contact",
+      "connect": "Connect"
+    }
+  },
+
+  "guest": {
+    "welcome": "You are in Guest mode",
+    "message": "Progress is saved locally in your browser. Create an account to sync across devices and access your decks anywhere."
+  }, 
+  "quiz": {
+    "myQuizzes": "My Quizzes",
+    "createQuiz": "New Quiz",
+    "noQuizzes": "You have no quizzes yet.",
+    "noQuizzesDesc": "Create your first quiz to start learning!",
+    "startLearning": "Start",
+    "editQuiz": "Edit",
+    "cancel": "Cancel",
+    "add": "Create",
+    "successRate": "Success rate",
+    "addQuiz": {
+      "title": "Give your quiz a name to get started",
+      "nameLabel": "Quiz name",
+      "namePlaceholder": "e.g. English Vocabulary"
+    },
+    "editModal": {
+      "question": "Question",
+      "answer": "Answer"
+    }
   }
 }

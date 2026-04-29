@@ -14,24 +14,24 @@ export const STEPS = [
 
 export const TESTIMONIALS = [
     {
-    name: "Sarah Johnson",
-    role: "Medical Student",
+    name: "testimonials.users.0.name",
+    role: "testimonials.users.0.role",
     image: "https://picsum.photos/id/494/100/100",
     rating: 5,
-    text: "EFFLearn transformed how I study for medical school. The spaced repetition system helped me retain complex information much better than traditional methods."
+    text: "testimonials.users.0.feedback"
   },
   {
-    name: "Michael Chen",
-    role: "Software Developer",
+    name: "testimonials.users.1.name",
+    role: "testimonials.users.1.role",
     image: "https://picsum.photos/id/507/100/100",
     rating: 5,
-    text: "As a developer learning new technologies, EFFLearn's structured approach helped me master React and TypeScript in just 3 months."
+    text: "testimonials.users.1.feedback"
   },
   {
-    name: "Emma Rodriguez",
-    role: "Language Learner",
+    name: "testimonials.users.2.name",
+    role: "testimonials.users.2.role",
     image: "https://picsum.photos/id/548/100/100",
     rating: 5,
-    text: "I've tried many language learning apps, but EFFLearn's methodology helped me become conversational in Spanish faster than I ever imagined."
+    text: "testimonials.users.2.feedback"
   }
 ]

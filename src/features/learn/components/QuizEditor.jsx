@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuizEditor } from '../../../hooks/useQuizEditor';
 import BtnReturnToGuest from '../../guest/components/BtnReturnToGuest';
+import { useTranslation } from 'react-i18next';
 
 function QuizEditor() {
   const { quizName } = useParams();
   const { quiz, addFlashcard, deleteFlashcard } = useQuizEditor(quizName);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const { t } = useTranslation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +22,7 @@ function QuizEditor() {
 
   if (!quiz) return (
     <div className="flex items-center justify-center h-screen text-gray-400 text-sm tracking-widest">
-      Loading...
+      {t('quiz.loading')}
     </div>
   );
 
@@ -49,7 +51,7 @@ function QuizEditor() {
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Question
+              {t('quiz.editModal.question')}
             </label>
             <input
               className="px-3.5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
@@ -60,7 +62,7 @@ function QuizEditor() {
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Answer
+              {t('quiz.editModal.answer')}
             </label>
             <input
               className="px-3.5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
@@ -74,7 +76,7 @@ function QuizEditor() {
           type="submit"
           className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-sm font-semibold rounded-lg transition"
         >
-          + Add card
+          + {t('quiz.createQuiz')}
         </button>
       </form>
 

@@ -3,6 +3,7 @@ import QuizCard from './QuizCard';
 import QuizEditorModal from './QuizEditorModal';
 import { Loader, SquareLibrary } from 'lucide-react';
 import { useQuizzes } from '../../../hooks/useQuizzes';
+import { useTranslation } from 'react-i18next';
 
 function QuizArea({isGuest, quiz }) {
   const { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount } = useQuizzes(isGuest);
@@ -10,6 +11,7 @@ function QuizArea({isGuest, quiz }) {
   const [quizName, setQuizName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 const [selectedQuiz, setSelectedQuiz] = useState(null);
+const { t } = useTranslation();
 
 function handleEdit(quiz) {
   setSelectedQuiz(quiz);
@@ -28,7 +30,7 @@ async function handleAddQuiz(){
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-            My Quizzes
+           {t('quiz.myQuizzes')}
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {quizzesCount} {quizzesCount === 1 ? 'quiz' : 'quizzes'}
@@ -40,7 +42,7 @@ async function handleAddQuiz(){
           aria-label="Add new quiz"
         >
           <span className="text-lg leading-none">+</span>
-          New quiz
+         {t('quiz.createQuiz')}
         </button>
       </div>
 
@@ -49,9 +51,9 @@ async function handleAddQuiz(){
           <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
             <span className="text-2xl"><Loader/></span>
           </div>
-          <p className="text-gray-700 font-medium mb-1">No quizzes yet</p>
+          <p className="text-gray-700 font-medium mb-1">{t('quiz.noQuizzes')}</p>
           <p className="text-sm text-gray-400">
-            Create your first quiz to start learning
+            {t('quiz.noQuizzesDesc')}
           </p>
         </div>
       )}
@@ -65,8 +67,8 @@ async function handleAddQuiz(){
           <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
             <span className="text-2xl"><SquareLibrary/></span>
           </div>
-          <p className="text-gray-700 font-medium mb-1">No quizzes yet</p>
-          <p className="text-sm text-gray-400">Create your first quiz to start learning</p>
+          <p className="text-gray-700 font-medium mb-1">{t('quiz.noQuizzes')}</p>
+          <p className="text-sm text-gray-400">{t('quiz.noQuizzesDesc')}</p>
         </div>
       )}
 
@@ -103,21 +105,21 @@ async function handleAddQuiz(){
         >
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
             <h2 className="text-xl font-bold text-gray-900 mb-1">
-              New quiz
+              {t('quiz.createQuiz')}
             </h2>
             <p className="text-sm text-gray-400 mb-6">
-              Give your quiz a name to get started
+               {t('quiz.addQuiz.title')}
             </p>
 
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-              Quiz name
+               {t('quiz.addQuiz.nameLabel')}
             </label>
             <input
               type="text"
               value={quizName}
               onChange={(e) => setQuizName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAddQuiz()}
-              placeholder="e.g. English Words"
+              placeholder={t('quiz.addQuiz.namePlaceholder')}
               className="w-full border border-gray-200 bg-gray-50 text-gray-900 px-4 py-2.5 rounded-lg mb-6 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
               autoFocus
             />
@@ -127,14 +129,14 @@ async function handleAddQuiz(){
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
               >
-                Cancel
+                 {t('quiz.cancel')}
               </button>
               <button
                 onClick={handleAddQuiz}
                 disabled={!quizName.trim()}
                 className="px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition"
               >
-                Create
+                 {t('quiz.add')}
               </button>
             </div>
           </div>

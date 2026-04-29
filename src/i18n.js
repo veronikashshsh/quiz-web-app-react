@@ -6,21 +6,20 @@ import en from './locales/en.json';
 import uk from './locales/uk.json';
 
 i18n
-  .use(LanguageDetector)      // автовизначення мови браузера
-  .use(initReactI18next)      // підключення до React
+  .use(LanguageDetector)     
+  .use(initReactI18next)    
   .init({
     resources: {
       en: { translation: en },
       uk: { translation: uk },
     },
-    fallbackLng: 'en',        // якщо мову не знайдено — English
+    fallbackLng: 'en',       
     detection: {
-      // де зберігати вибір мови
       order: ['localStorage', 'navigator'],
-      caches: ['localStorage'], // запам'ятовує вибір після перезавантаження
+      caches: ['localStorage'],
     },
     interpolation: {
-      escapeValue: false,     // React сам захищає від XSS
+      escapeValue: false,   
     },
   });
 
