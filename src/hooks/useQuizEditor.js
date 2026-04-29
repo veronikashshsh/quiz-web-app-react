@@ -12,31 +12,31 @@ export function useQuizEditor(quiz, isGuest) {
     if(!question.trim() || !answer.trim()) return false;
 
     const newCard = { question:question.trim(), answer: answer.trim() };
-    const updated = [...localQuiz.flashcards, newCard]; // Створюємо новий масив з доданою карткою
+    const updated = [...localQuiz.flashcards, newCard]; 
 
-    setLocalQuiz({ ...localQuiz, flashcards: updated }); // Оновлюємо стан з новим масивом карток
+    setLocalQuiz({ ...localQuiz, flashcards: updated }); 
     
     if(isGuest) {
       const all = JSON.parse(localStorage.getItem('quizzes')) || [];
-      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); // Оновлюємо масив квізів в localStorage
+      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); 
       localStorage.setItem('quizzes', JSON.stringify(newAll));
     } else {
-      await updateFlashcards(localQuiz.id, updated); // Оновлюємо дані на сервері
+      await updateFlashcards(localQuiz.id, updated);
     }  
 
     return true;
   }
 
   async function deleteFlashcard(index) {
-    const updated = localQuiz.flashcards.filter((_, i) => i !== index); // Створюємо новий масив без видаленої картки
-    setLocalQuiz({ ...localQuiz, flashcards: updated }); // Оновлюємо стан з новим масивом карток
+    const updated = localQuiz.flashcards.filter((_, i) => i !== index); 
+    setLocalQuiz({ ...localQuiz, flashcards: updated }); 
 
     if(isGuest) {
-      const all = JSON.parse(localStorage.getItem('quizzes')) || []; // Отримуємо всі квізи з localStorage
-      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); // Оновлюємо масив квізів в localStorage
-      localStorage.setItem('quizzes', JSON.stringify(newAll)); // Зберігаємо оновлений масив квізів в localStorage
+      const all = JSON.parse(localStorage.getItem('quizzes')) || []; 
+      const newAll = all.map(q => q.name === localQuiz.name ? { ...q, flashcards: updated } : q); 
+      localStorage.setItem('quizzes', JSON.stringify(newAll)); 
     } else {
-      await updateFlashcards(localQuiz.id, updated); // Оновлюємо дані на сервері
+      await updateFlashcards(localQuiz.id, updated); 
     }
 
   }

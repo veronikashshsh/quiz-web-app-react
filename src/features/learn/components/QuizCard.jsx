@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
+function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit, isGuest }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ function QuizCard({ quiz, cardName, successRate = 0, onDelete, onEdit }) {
            {t('quiz.editQuiz')}
         </button>
         <button
-         onClick={() => navigate(`/quiz/${quiz.id}`)} 
+         onClick={() => navigate(`/quiz/${isGuest ? encodeURIComponent(quiz.name) : quiz.id}`)}
           aria-label="Start quiz"
           className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
         >
