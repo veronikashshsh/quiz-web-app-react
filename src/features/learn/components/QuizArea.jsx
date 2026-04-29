@@ -78,6 +78,7 @@ async function handleAddQuiz(){
         {quizzes?.map((quiz, index) => (
           <QuizCard
              key={quiz.id ?? index}
+              isGuest={isGuest}  
              cardName={quiz.name}
              quiz={quiz}           
              onDelete={() => deleteQuiz(quiz.id, index)}

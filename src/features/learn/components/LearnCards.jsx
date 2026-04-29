@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BtnReturnToGuest from '../../guest/components/BtnReturnToGuest';
 import { auth } from '../../../../config/firebase';
-import { onAuthStateChanged } from 'firebase/auth'; // Додали для надійності
+import { onAuthStateChanged } from 'firebase/auth'; 
 import { getQuizById, learnQuiz } from '../../../services/quizService';
 
 function LearnCards() {
@@ -15,14 +15,13 @@ function LearnCards() {
   const [isGuest, setIsGuest] = useState(false);
   const [results, setResults] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
-  const [loading, setLoading] = useState(true); // Додали стан завантаження
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         setIsGuest(true);
         const all = JSON.parse(localStorage.getItem('quizzes')) || [];
-        // Декодуємо назву з URL (щоб Test%20Quiz стало Test Quiz)
         const decodedName = decodeURIComponent(quizName);
         const found = all.find((q) => q.name === decodedName);
         setQuiz(found);
