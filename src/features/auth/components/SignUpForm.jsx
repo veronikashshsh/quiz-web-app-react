@@ -4,7 +4,7 @@ import GoogleButton from "./GoogleButton";
 import Divider from "./Divider";
 import Field from "./Field";
 import { auth, googleProvider } from "../../../../config/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
 
 function SignUpForm({ onSuccess, onSwitchToSignIn }) {
   const [name, setName] = useState('');
