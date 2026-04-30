@@ -30,9 +30,15 @@ function SignInForm({ onSuccess, onSwitchToSignUp }) {
 
   const handleGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      onSuccess();
-      navigate(`/dashboard/${auth.currentUser.displayName}`);
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if(isMobile){
+          await signInWithRedirect(auth, googleProvider);
+        } else {
+           await signInWithPopup(auth, googleProvider);
+          onSuccess();
+          navigate(`/dashboard/${auth.currentUser.displayName}`);
+        }
     } catch (err) {
       setError('Google sign in failed. Please try again.');
     }
