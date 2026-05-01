@@ -1,6 +1,6 @@
 import Header from '../main/components/Header';
 import QuizArea from '../learn/components/QuizArea';
-import BtnToMain from '../../components/BtnToMain';
+import BtnToMain from '../components/BtnToMain';
 import { useAuthModal } from '../../hooks/useAuth';
 
 function GuestMode({ initialModal = null }) {

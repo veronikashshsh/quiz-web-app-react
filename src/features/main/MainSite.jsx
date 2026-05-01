@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
@@ -10,10 +10,28 @@ import Hero from './components/Hero';
 import Steps from './components/Steps';
 import { useAuthModal } from '../../hooks/useAuth';
 import BannerCTA from './components/BannerCTA';
+import { getRedirectResult } from 'firebase/auth';
+import { auth } from '../../../config/firebase';
 
 function MainSite({ initialModal = null }) {
   const { t } = useTranslation();
   const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal(initialModal);
+   const navigate = useNavigate();
+
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          console.log("Success redirect:", result.user);
+          navigate(`/dashboard/${result.user.displayName || 'user'}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error redirect:", error);
+      });
+  }, [navigate]);
+
+  
   return (
     <>
     <div className='relative overflow-hidden min-h-screen'>

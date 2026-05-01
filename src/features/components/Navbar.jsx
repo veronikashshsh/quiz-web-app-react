@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { auth } from '../../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import {
   LayoutDashboard,
@@ -8,7 +7,8 @@ import {
   BarChart2,
   Settings,
 } from 'lucide-react';
-import SignOutBtn from '../features/auth/components/SignOutBtn';
+import { auth } from '../../../config/firebase';
+import SignOutBtn from '../../features/auth/components/SignOutBtn'
 
 
 const MENU_ITEMS = [

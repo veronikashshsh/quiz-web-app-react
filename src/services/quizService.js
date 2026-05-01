@@ -36,7 +36,6 @@ export async function createQuiz(name) {
   });
 }
 
-// Отримати всі квізи
 export async function getQuizzes() {
   const user = await waitForUser();
   const ref = collection(db, "users", user.uid, "quizzes");

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 function Steps() {
     const { t } = useTranslation();
   return (
-    <section id="how-it-works" className="py-24">
+    <section id="how-it-works" className="py-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">{t("steps.title")}</h2>

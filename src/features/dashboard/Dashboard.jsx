@@ -1,6 +1,6 @@
 'use client';
 
-import NavBar from '../../components/Navbar'
+import NavBar from '../components/Navbar'
 import MainContent from './components/MainContent';
 
 function Dashboard() {

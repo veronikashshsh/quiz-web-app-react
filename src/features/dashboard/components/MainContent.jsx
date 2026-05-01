@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, BarChart2, Plus, ArrowRight } from 'lucide-react';
-import { STATS } from '../../../data/statsData';
+import  { useStats } from '../../../hooks/useStats';
 import { auth } from '../../../../config/firebase';
+import { StatCard } from '../../stats/components/StatsCard';
+import { StatsData } from '../../../data/statsData';
 
 function MainContent() {
   const navigate = useNavigate();
+  const stats = useStats()
   const username = auth.currentUser?.displayName || '';
 
   return (
@@ -23,26 +26,17 @@ function MainContent() {
 
         {/* Stats grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          {STATS.map((stat) => {
+          {StatsData.map((stat) => {
             const Icon = stat.icon;
-            return (
-              <div
-                key={stat.label}
-                className="bg-white border border-gray-200 rounded-xl p-5"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    {stat.label}
-                  </p>
-                  <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center`}>
-                    <Icon size={16} className={stat.color} />
-                  </div>
-                </div>
-                <p className={`text-3xl font-bold mb-1 ${stat.color}`}>
-                  {stat.value}
-                </p>
-                <p className="text-xs text-gray-400">{stat.sub}</p>
-              </div>
+             return (
+             <StatCard
+                key={stat.key}
+                label={stat.label}
+                value={stats[stat.key]}
+                icon={Icon}
+                color={stat.color}
+                bg={stat.bg}
+            />
             );
           })}
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createQuiz, getQuizzes, deleteQuiz as deleteQuizFromDB } from "../services/quizService";
+import { getAverageSuccessRate, getCardsStudied, getQuizzesCount } from "../selectors/quizSelectors";
 
 
 
@@ -87,6 +88,6 @@ async function deleteQuiz(quizId, index) {
     }
 }
 
-return { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount: quizzes.length };
+return { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount: getQuizzesCount(quizzes), cardsStudied: getCardsStudied(quizzes), averageSuccessRate: getAverageSuccessRate(quizzes) };
 
 }

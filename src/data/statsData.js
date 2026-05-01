@@ -1,29 +1,25 @@
 import { BarChart2, BookOpen } from "lucide-react";
-import { useQuizzes } from "../hooks/useQuizzes";
 
-export const STATS = [
+export const StatsData = [
   {
-    label: 'Total quizzes',
-    value: 0,
-    sub: 'Create your first quiz',
-    color: 'text-indigo-600',
-    bg: 'bg-indigo-50',
+    key: "quizzesCount",
+    label: "Total quizzes",
     icon: BookOpen,
+    color: "text-indigo-600",
+    bg: "bg-indigo-50",
   },
   {
-    label: 'Cards studied',
-    value: '0',
-    sub: 'Start studying to see progress',
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50',
+    key: "cardsStudied",
+    label: "Cards studied",
     icon: BarChart2,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
   },
   {
-    label: 'Avg. success rate',
-    value: '—',
-    sub: 'No data yet',
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
+    key: "averageSuccessRate",
+    label: "Avg. success rate",
     icon: BarChart2,
+    color: "text-amber-600",
+    bg: "bg-amber-50",
   },
 ];
