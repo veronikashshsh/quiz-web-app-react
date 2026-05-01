@@ -29,7 +29,6 @@ function AuthModal({ isOpen, onClose, defaultTab = 'signin' }) {
           <X size={18} />
         </button>
 
-        {/* Перемикач вкладок */}
         <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
           <button
             type="button"
@@ -55,7 +54,6 @@ function AuthModal({ isOpen, onClose, defaultTab = 'signin' }) {
           </button>
         </div>
 
-        {/* Форми — перемикаються залежно від вкладки */}
         {tab === 'signin' ? (
           <SignInForm onSuccess={onClose} onSwitchToSignUp={() => setTab('signup')} />
         ) : (

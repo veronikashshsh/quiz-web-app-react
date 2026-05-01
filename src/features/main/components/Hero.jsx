@@ -5,7 +5,7 @@ function Hero({onSignUp}) {
      const { t } = useTranslation();
     const navigate = useNavigate()
   return (
-     <section className="max-w-10xl mx-auto px-6 pt-44 pb-64 text-center">
+     <section className="max-w-10xl mx-auto px-6 pt-36 pb-36 text-center">
         <span className="inline-block px-3 py-1 mb-6 text-xs font-semibold text-indigo-600 bg-indigo-50 rounded-full">
           {t("hero.badge")}
         </span>

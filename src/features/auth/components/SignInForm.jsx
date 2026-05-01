@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleButton from "./GoogleButton";
 import Divider from "./Divider";
 import Field from "./Field";
 import { auth, googleProvider } from "../../../../config/firebase";
-import { signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { getRedirectResult, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
 
 function SignInForm({ onSuccess, onSwitchToSignUp }) {
   const [email, setEmail] = useState('');
@@ -12,6 +12,23 @@ function SignInForm({ onSuccess, onSwitchToSignUp }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+   // for ios redirect
+    useEffect(() => {
+      getRedirectResult(auth)
+        .then((result) => {
+          if (result) {
+            // if user returned after google auth
+            onSuccess();
+            navigate(`/dashboard/${result.user.displayName || 'user'}`);
+          }
+        })
+        .catch((err) => {
+          console.error("Redirect error:", err);
+          setError("Failed to complete Google Sign In.");
+        });
+    }, []);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

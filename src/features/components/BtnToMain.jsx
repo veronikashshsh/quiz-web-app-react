@@ -19,7 +19,7 @@ function BtnToMain() {
         active:scale-95
         transition
       "
-      aria-label="Return to main page"
+      aria-label="Return back"
     >
       ←
     </button>

@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../components/Navbar'
+import NavBar from '../components/Navbar'
 import MainContent from '../dashboard/components/MainContent'
 import QuizArea from './components/QuizArea'
 

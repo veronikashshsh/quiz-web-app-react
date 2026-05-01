@@ -6,9 +6,9 @@ function Features() {
   const { t } = useTranslation();
   
   return (
-    <section id="features" className=" py-20">
+    <section id="features" className=" py-10 md:py-36">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 md:mb-20">
             <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-4">{t("features.title")}</h2>
             <p className="text-gray-500 max-w-md mx-auto">{t("features.subtitle")}</p>
           </div>
