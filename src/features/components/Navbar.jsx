@@ -9,26 +9,31 @@ import {
 } from 'lucide-react';
 import { auth } from '../../../config/firebase';
 import SignOutBtn from '../../features/auth/components/SignOutBtn'
+import { useTranslation } from 'react-i18next';
 
 
 const MENU_ITEMS = [
   {
-    name: 'Dashboard',
+    key: 'dashboard',
+    label: 'navbar.dashboard',
     icon: LayoutDashboard,
-    path: '/dashboard',   
+    path: '/dashboard',
   },
   {
-    name: 'Quizzes',
+    key: 'quizzes',
+    label: 'navbar.quizzes',
     icon: BookOpen,
     path: '/userquizarea',
   },
   {
-    name: 'Statistics',
+    key: 'statistics',
+    label: 'navbar.statistics',
     icon: BarChart2,
     path: '/stats',
   },
   {
-    name: 'Settings',
+    key: 'settings',
+    label: 'navbar.settings',
     icon: Settings,
     path: '/settings',
   },
@@ -40,6 +45,7 @@ function NavBar() {
   const [activeItem, setActiveItem] = useState('Dashboard');
   const navigate = useNavigate();
   const location = useLocation(); 
+  const { t } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -97,7 +103,7 @@ function NavBar() {
         </div>
         <nav className="flex-1 px-3 py-4 overflow-y-auto">
           <p className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Menu
+            {t('navbar.menu')}
           </p>
           {MENU_ITEMS.map((item) => {
             const Icon = item.icon;
@@ -120,7 +126,7 @@ function NavBar() {
                   size={18}
                   className={isActive ? 'text-indigo-600' : 'text-gray-400'}
                 />
-                {item.name}
+                {t(item.label)}
                 {isActive && (
                   <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-600" />
                 )}
@@ -140,7 +146,7 @@ function NavBar() {
               <p className="text-sm font-medium text-gray-900 truncate">
                 {username || 'Loading...'}
               </p>
-              <p className="text-xs text-gray-400">Authorized</p>
+              <p className="text-xs text-gray-400">{t('navbar.authorized')}</p>
             </div>
             <SignOutBtn />
           </div>

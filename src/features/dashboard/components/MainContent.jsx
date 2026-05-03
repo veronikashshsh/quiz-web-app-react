@@ -4,11 +4,13 @@ import  { useStats } from '../../../hooks/useStats';
 import { auth } from '../../../../config/firebase';
 import { StatCard } from '../../stats/components/StatsCard';
 import { StatsData } from '../../../data/statsData';
+import { useTranslation } from 'react-i18next';
 
 function MainContent() {
   const navigate = useNavigate();
   const stats = useStats()
   const username = auth.currentUser?.displayName || '';
+  const { t } = useTranslation();
 
   return (
     <div className="flex-1 overflow-auto bg-gray-100">
@@ -17,10 +19,10 @@ function MainContent() {
         {/* Page header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-            Welcome back{username ? `, ${username}` : ''}
+            {t('dashboard.welcome')}{username ? `, ${username}` : ''}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Here's an overview of your learning progress
+            {t('dashboard.description')}
           </p>
         </div>
 

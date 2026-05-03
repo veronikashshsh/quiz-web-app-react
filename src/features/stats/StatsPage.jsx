@@ -5,19 +5,21 @@ import NavBar from '../components/Navbar'
 import { StatsData } from '../../data/statsData';
 import { StatCard } from './components/StatsCard';
 import { useStats } from '../../hooks/useStats';
+import { useTranslation } from 'react-i18next';
 
 function StatsPage() {
     const stats = useStats()
+    const { t } = useTranslation();
   return (
     <div  className="flex h-screen bg-gray-100">
         <NavBar/>
          <div className=' max-w-5xl mx-auto px-6 py-8'>
            <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-            Statistics & Progress
+            {t('statistics.title')}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Here's an overview of your learning progress
+           {t('statistics.subtitle')}
           </p>
         </div>
 
