@@ -125,5 +125,27 @@
       "question": "Question",
       "answer": "Answer"
     }
+  },
+  "navbar": {
+    "dashboard": "Dashboard",
+    "quizzes": "Quizzes",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "authorized": "authorized",
+    "menu": "Menu"
+  },
+   "dashboard": {
+    "welcome": "Welcome back",
+    "description": "Here you can create and manage your quizzes, track your progress, and improve your learning skills."
+  },
+  "statistics": {
+    "title": "Success Rate and Progress Statistics",
+    "subtitle": "Get valuable information about your learning achievements and areas for improvement.",
+    "quizzesTaken": "Total quizzes taken",
+    "cardsLearned": "Cards learned",
+    "averageScore": "Average score",
+    "recentActivity": "Recent activity", 
+    "noActivity": "You have no activity yet",
+    "noActivityDesc": "Take a few quizzes to see your statistics here!"
   }
 }
