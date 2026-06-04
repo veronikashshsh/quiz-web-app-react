@@ -9,12 +9,12 @@ const { t } = useTranslation();
         <section id="testimonials" className="py-10 md:py-36 px-4 sm:px-6 lg:px-8 bg-white/50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
-            {t('testimonials.title')}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            {t('testimonials.subtitle')}
-          </p>
+          <h1 className="text-2xl md:text-4xl xl:text-4xl font-black text-gray-900 tracking-tight leading-[1.1] mb-6">
+              {t("testimonials.title")}
+            </h1>
+            <p className="text-lg md:text-2xl text-gray-500 mb-10 leading-relaxed">
+              {t("testimonials.subtitle")}
+            </p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">

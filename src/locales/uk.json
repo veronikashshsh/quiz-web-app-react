@@ -21,7 +21,9 @@
     "cta": {
       "primary":   "Почати",
       "secondary": "Спробувати без акаунту"
-    }
+    },
+    "quizCompleted": "Тест завершено",
+    "progress": "Прогреc"
   },
  
   "features": {

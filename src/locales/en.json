@@ -21,7 +21,9 @@
     "cta": {
       "primary":   "Get started",
       "secondary": "Try without account"
-    }
+    },
+     "quizCompleted": "Quiz completed",
+    "progress": "Progress"
   },
  
   "features": {
