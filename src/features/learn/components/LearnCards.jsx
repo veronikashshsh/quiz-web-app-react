@@ -17,26 +17,35 @@ function LearnCards() {
   const [isFinished, setIsFinished] = useState(false);
   const [loading, setLoading] = useState(true); 
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setIsGuest(true);
-        const all = JSON.parse(localStorage.getItem('quizzes')) || [];
-        const decodedName = decodeURIComponent(quizName);
-        const found = all.find((q) => q.name === decodedName);
-        setQuiz(found);
-        setLoading(false);
-      } else {
-        setIsGuest(false);
-        getQuizById(quizName).then((data) => {
-          setQuiz(data);
-          setLoading(false);
-        });
+ useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const decodedName = decodeURIComponent(quizName);
+    const localQuizzes = JSON.parse(localStorage.getItem('quizzes')) || [];
+    const localFound = localQuizzes.find((q) => 
+      q.name.trim().toLowerCase() === decodedName.trim().toLowerCase()
+    );
+    if (localFound) {
+      setQuiz(localFound);
+      setIsGuest(true);
+      setLoading(false);
+    } else if (user) {
+      setIsGuest(false);
+      try {
+        const data = await getQuizById(quizName);
+        setQuiz(data);
+      } catch (err) {
+        console.error("Quiz not found in DB", err);
       }
-    });
+      setLoading(false);
+    } else {
+      setIsGuest(true);
+      setQuiz(null);
+      setLoading(false);
+    }
+  });
 
-    return () => unsubscribe();
-  }, [quizName]);
+  return () => unsubscribe();
+}, [quizName]);
 
   const handleAnswer = async (isCorrect) => {
     const newResults = [...results, isCorrect];
