@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/__/auth/(.*)",
+      "destination": "https://learnapp-react-12dee.firebaseapp.com/__/auth/$1"
+    }
   ],
   "headers": [
     {
