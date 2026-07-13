@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuizEditor } from '../../hooks/useQuizEditor';
 import { useQuizzes } from '../../hooks/useQuizzes'; // Додаємо цей хук
 import { useTranslation } from 'react-i18next';
-import BtnReturnToGuest from '../Guest/BtnReturnToGuest';
+import BtnReturnToGuest from '../Guest/BtnReturnBack';
 import { Quiz, Flashcard } from '../../types/quiz';
 
 function QuizEditor() {

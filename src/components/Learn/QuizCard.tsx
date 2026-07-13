@@ -12,9 +12,12 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, isGuest, onDelete, onEdit }) 
   const status = getRateStatus(successRate);
 
   const handleStart = () => {
-    const target = isGuest ? encodeURIComponent(name) : quiz.id;
-    navigate(`/quiz/${target}`);
-  };
+  if (isGuest) {
+    navigate(`/guest/quiz/${encodeURIComponent(quiz.name)}`);
+  } else {
+    navigate(`/quiz/${quiz.id}`);
+  }
+};
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-indigo-200 hover:shadow-sm transition group">
@@ -57,7 +60,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, isGuest, onDelete, onEdit }) 
            {t('quiz.editQuiz')}
         </button>
         <button
-         onClick={() => navigate(`/quiz/${isGuest ? encodeURIComponent(quiz.name) : quiz.id}`)}
+         onClick={() => handleStart()}
           aria-label="Start quiz"
           className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
         >

@@ -10,6 +10,8 @@ import LearnCards from '../components/Learn/LearnCards.tsx';
 import LearnPage from '../features/learn/LearnPage.tsx';
 import StatsPage from '../features/stats/StatsPage.tsx';
 import SettingsPage from '../features/settings/SettingsPage.tsx';
+import AppLayout from '../layouts/AppLayout.tsx';
+import GuestLayout from '../layouts/GuestLayout.tsx';
 
 
 const AppRoutes: React.FC = () => {
@@ -29,16 +31,23 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<MainSite />} />
-      <Route path="/guest" element={<GuestMode />} />
-      <Route path="/login" element={<MainSite initialModal="signin" />} />
-      <Route path="/register" element={<MainSite initialModal="signup" />} />
-      <Route path="/dashboard/:name" element={<Dashboard />} />
-      <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
-      <Route path="/quiz/:quizName" element={<LearnCards />} />
-      <Route path="/userquizarea/:name" element={<LearnPage />} />
-      <Route path="/stats/:name" element={<StatsPage />} />
-      <Route path="/settings/:name" element={<SettingsPage />} />
+      <Route element={<GuestLayout />} >
+        <Route path="/" element={<MainSite />} />
+        <Route path="/login" element={<MainSite initialModal="signin" />} />
+        <Route path="/register" element={<MainSite initialModal="signup" />} />
+      
+        <Route path="/guest" element={<GuestMode />} />
+        <Route path="/guest/quiz/:quizName" element={<LearnCards forcedGuest />} />
+      </Route>
+
+       <Route element={<AppLayout />}>
+        <Route path="/dashboard/:name" element={<Dashboard  isGuest/>} />
+        <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
+        <Route path="/quiz/:quizId" element={<LearnCards />} />
+        <Route path="/userquizarea/:name" element={<LearnPage />} />
+        <Route path="/stats/:name" element={<StatsPage />} />
+        <Route path="/settings/:name" element={<SettingsPage />} />
+      </Route>
     </Routes>
   );
 }

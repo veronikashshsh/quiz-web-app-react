@@ -12,10 +12,7 @@ import { useAuthModal } from '../../hooks/useAuth';
 import BannerCTA from './components/BannerCTA';
 import { getRedirectResult } from 'firebase/auth';
 import { auth } from '../../../config/firebase';
-
-interface MainSiteProps {
-  initialModal?: 'signin' | 'signup';
-}
+import { MainSiteProps } from '../../types/main';
 
 const MainSite: React.FC<MainSiteProps> = ({ initialModal }) => {
   const { t } = useTranslation();
@@ -42,7 +39,6 @@ const MainSite: React.FC<MainSiteProps> = ({ initialModal }) => {
      <div className="absolute -top-[10%] -right-[0%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
   
       <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
-      <Header onSignIn={openSignIn} onSignUp={openSignUp} />
 
       <AuthModal
         isOpen={authModal.isOpen}

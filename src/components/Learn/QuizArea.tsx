@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Quiz } from '../../types/quiz';
+import { Quiz, QuizAreaProps } from '../../types/quiz';
 import { useQuizzes } from '../../hooks/useQuizzes';
 import { Loader, SquareLibrary } from 'lucide-react';
 import QuizCard from './QuizCard';
 import QuizEditorModal from './QuizEditorModal';
-
-interface QuizAreaProps {
-  isGuest: boolean;
-}
+import ConfirmDialog from '../General/ConfirmDialog';
+import CreateQuizModal from './CreateQuizModal';
 
 const QuizArea: React.FC<QuizAreaProps> = ({ isGuest }) =>{
-  const { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount } = useQuizzes(isGuest);
+  const { quizzes, isLoading, error, addQuiz, deleteQuiz, quizzesCount, updateQuizLocally } = useQuizzes(isGuest);
   const [showModal, setShowModal] = useState(false);
   const [quizName, setQuizName] = useState('');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
+  const [quizToDelete, setQuizToDelete] = useState<Quiz | null>(null);
   const { t } = useTranslation();
 
 function handleEdit(quiz: Quiz) {
   setSelectedQuiz(quiz);
+  setIsEditorOpen(true);
 }
 
 async function handleAddQuiz(){
@@ -27,6 +27,23 @@ async function handleAddQuiz(){
   await addQuiz(quizName.trim());
   setQuizName('');
   setShowModal(false);
+}
+
+function handleQuizUpdate(updatedQuiz: Quiz) {
+  updateQuizLocally(updatedQuiz);
+  setSelectedQuiz(updatedQuiz);
+}
+
+function handleDeleteRequest(quiz: Quiz) {
+    setQuizToDelete(quiz);
+  }
+
+function handleConfirmDelete() {
+    if (quizToDelete?.id) {
+      const index = quizzes.findIndex(q => q.id === quizToDelete.id);
+      deleteQuiz(quizToDelete.id, index);
+    }
+    setQuizToDelete(null);
 }
 
   return (
@@ -84,7 +101,7 @@ async function handleAddQuiz(){
              key={quiz.id || index}
              isGuest={isGuest}  
              quiz={quiz}          
-             onDelete={() => quiz.id && deleteQuiz(quiz.id, index)}
+             onDelete={() => handleDeleteRequest(quiz)}
              onEdit={() => handleEdit(quiz)} 
           />
         ))}
@@ -96,53 +113,28 @@ async function handleAddQuiz(){
           quiz={selectedQuiz}
           isGuest={isGuest}
           onClose={() => setIsEditorOpen(false)}
+          onQuizUpdate={handleQuizUpdate}
+        />
+      )}
+
+       {quizToDelete && (
+        <ConfirmDialog
+          title={`Видалити квіз "${quizToDelete.name}"?`}
+          description="Цю дію не можна скасувати. Усі картки квізу буде втрачено."
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setQuizToDelete(null)}
         />
       )}
 
 
       {showModal && (
-        <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
-          onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
-        >
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">
-              {t('quiz.createQuiz')}
-            </h2>
-            <p className="text-sm text-gray-400 mb-6">
-               {t('quiz.addQuiz.title')}
-            </p>
-
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-               {t('quiz.addQuiz.nameLabel')}
-            </label>
-            <input
-              type="text"
-              value={quizName}
-              onChange={(e) => setQuizName(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleAddQuiz()}
-              placeholder={t('quiz.addQuiz.namePlaceholder')}
-              className="w-full border border-gray-200 bg-gray-50 text-gray-900 px-4 py-2.5 rounded-lg mb-6 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition placeholder:text-gray-300"
-              autoFocus
-            />
-
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-              >
-                 {t('quiz.cancel')}
-              </button>
-              <button
-                onClick={handleAddQuiz}
-                disabled={!quizName.trim()}
-                className="px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition"
-              >
-                 {t('quiz.add')}
-              </button>
-            </div>
-          </div>
-        </div>
+        <CreateQuizModal
+          isOpen={showModal}
+          quizName={quizName}
+          onQuizNameChange={setQuizName}
+          onClose={() => setShowModal(false)}
+          onSubmit={handleAddQuiz}
+        />
       )}
     </div>
   );
