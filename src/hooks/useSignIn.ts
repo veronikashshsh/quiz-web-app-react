@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { ROUTES } from "../constants/routes";
 import { auth, googleProvider } from '../../config/firebase';
+import { FirebaseError } from "firebase/app";
 
 interface UseSignInProps {
   onSuccess: () => void;
@@ -28,8 +29,14 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
         }
       })
       .catch((err) => {
-        console.error("Redirect auth error:", err);
-        setError("Failed to complete Google Sign In.");
+        if (err instanceof FirebaseError) {
+          console.error("Firebase code:", err.code);
+          console.error("Firebase message:", err.message);
+          setError(err.message);
+        } else {
+          console.error(err);
+          setError("Unknown error");
+        }
       });
   }, [navigate, onSuccess]);
 

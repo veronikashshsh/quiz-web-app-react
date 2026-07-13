@@ -41,7 +41,7 @@ const AppRoutes: React.FC = () => {
       </Route>
 
        <Route element={<AppLayout />}>
-        <Route path="/dashboard/:name" element={<Dashboard  isGuest/>} />
+        <Route path="/dashboard/:name" element={<Dashboard  isGuest={false}/>} />
         <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
         <Route path="/quiz/:quizId" element={<LearnCards />} />
         <Route path="/userquizarea/:name" element={<LearnPage />} />

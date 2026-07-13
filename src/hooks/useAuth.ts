@@ -1,29 +1,11 @@
-// hooks/useAuthModal.js
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
-export function useAuthModal(initialModal: 'signin' | 'signup' | null = null) {
+export function useAuthModal() {
   const navigate = useNavigate();
 
-  const [authModal, setAuthModal] = useState({
-    isOpen: initialModal != null,
-    tab: initialModal ?? 'signin',
-  });
-
-  const openSignIn = () => {
-    navigate('/login');
-    setAuthModal({ isOpen: true, tab: 'signin' });
+  return {
+    openSignIn: () => navigate('/login'),
+    openSignUp: () => navigate('/register'),
+    closeModal: () => navigate('/'),
   };
-
-  const openSignUp = () => {
-    navigate('/register');
-    setAuthModal({ isOpen: true, tab: 'signup' });
-  };
-
-  const closeModal = () => {
-    navigate('/');
-    setAuthModal({ isOpen: false, tab: 'signin' });
-  };
-
-  return { authModal, openSignIn, openSignUp, closeModal };
 }
