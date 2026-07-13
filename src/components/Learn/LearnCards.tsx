@@ -1,56 +1,92 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getQuizById, learnQuiz } from '../../services/quizService';
-import BtnReturnToGuest from '../Guest/BtnReturnToGuest';
+import BtnReturnBack from '../Guest/BtnReturnBack';
 import { Quiz } from '../../types/quiz';
 import { auth } from '../../../config/firebase';
 
-function LearnCards() {
-  const { quizName } = useParams();
+interface LearnCardsProps {
+  forcedGuest?: boolean;
+}
+
+function LearnCards({ forcedGuest = false }: LearnCardsProps) {
+  const { quizName, quizId } = useParams(); 
   const navigate = useNavigate();
-  
+
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isGuest, setIsGuest] = useState<boolean>(false);
   const [results, setResults] = useState<boolean[]>([]);
   const [isFinished, setIsFinished] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); 
+  const [status, setStatus] = useState<'loading' | 'found' | 'not-found'>('loading');
+
+  const isGuest = forcedGuest;
 
  useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  setStatus('loading');
+
+  if (isGuest) {
     const decodedName = decodeURIComponent(quizName || '');
-    
-    const localQuizzes = JSON.parse(localStorage.getItem('quizzes') || '[]');
-    const localFound = localQuizzes.find((q: Quiz) => 
+    const localQuizzes: Quiz[] = JSON.parse(localStorage.getItem('quizzes') || '[]');
+    const localFound = localQuizzes.find(q =>
       q.name.trim().toLowerCase() === decodedName.trim().toLowerCase()
     );
 
-    if (localFound) {
+    if (localFound && localFound.flashcards?.length > 0) {
       setQuiz(localFound);
-      setIsGuest(true);
-    } 
-    else if (user && quizName) {
-      setIsGuest(false);
-      try {
-        const data = await getQuizById(quizName);
-        setQuiz(data as Quiz);
-      } catch (err) {
-        console.error("Quiz not found in DB", err);
-      }
+      setStatus('found');
     } else {
-      setIsGuest(true);
-      setQuiz(null);
+      setStatus('not-found');
     }
+    return;
+  }
+
+  async function loadQuiz(user: typeof auth.currentUser) {
+    console.log('Auth user:', user, 'quizId:', quizId); // тимчасовий лог
+
+    if (!user || !quizId) {
+      setStatus('not-found');
+      return;
+    }
+    try {
+      const data = await getQuizById(quizId);
+      console.log('Loaded quiz:', data);
+      if (data && data.flashcards?.length > 0) {
+        setQuiz(data);
+        setStatus('found');
+      } else {
+        setStatus('not-found');
+      }
+    } catch (err) {
+      console.error("Quiz not found in DB", err);
+      setStatus('not-found');
+    }
+  }
+
+ 
+  if (auth.currentUser) {
+    loadQuiz(auth.currentUser);
+    return;
+  }
+
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    loadQuiz(user);
   });
 
   return () => unsubscribe();
-}, [quizName]);
+}, [isGuest, quizName, quizId]);
+  const handleBack = () => {
+    if (isGuest) {
+      navigate('/guest');
+    } else {
+      navigate(`/userquizarea/${auth.currentUser?.displayName}`);
+    }
+  };
 
   const handleAnswer = async (isCorrect: boolean) => {
-    if(!quiz) return;
-    
+    if (!quiz) return;
+
     const newResults = [...results, isCorrect];
     setResults(newResults);
 
@@ -59,7 +95,7 @@ function LearnCards() {
       setIsVisible(false);
     } else {
       setIsFinished(true);
-      
+
       if (!isGuest && quiz.id) {
         try {
           await learnQuiz(quiz.id, newResults);
@@ -70,15 +106,15 @@ function LearnCards() {
     }
   };
 
-  if (loading) {
+  if (status === 'loading') {
     return <div className="flex h-screen items-center justify-center">Loading...</div>;
   }
 
-  if (!quiz || !quiz.flashcards || quiz.flashcards.length === 0) {
+  if (status === 'not-found' || !quiz || !quiz.flashcards || quiz.flashcards.length === 0) {
     return (
       <div className="flex flex-col h-screen items-center justify-center gap-4">
-        <p>No cards found for: {decodeURIComponent(quizName || '')}</p>
-        <button onClick={() => navigate(-1)} className="text-indigo-600 underline">Go back</button>
+        <p>No cards found for: {decodeURIComponent(quizName || quizId || '')}</p>
+        <button onClick={handleBack} className="text-indigo-600 underline">Go back</button>
       </div>
     );
   }
@@ -91,8 +127,8 @@ function LearnCards() {
         <p className="text-xl text-gray-600 mb-8">
           You knew {score} out of {quiz.flashcards.length} cards.
         </p>
-        <button 
-          onClick={() => navigate(-1)}
+        <button
+          onClick={handleBack}
           className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold"
         >
           Back to My Quizzes
@@ -102,8 +138,7 @@ function LearnCards() {
   }
 
   const currentCard = quiz?.flashcards?.[currentIndex];
-
-  if(!currentCard) return null;
+  if (!currentCard) return null;
 
   return (
     <div className="relative min-h-screen bg-[#f3f4f6] flex flex-col overflow-hidden">
@@ -111,7 +146,7 @@ function LearnCards() {
 
       <div className="relative z-10 flex items-center justify-between bg-white/70 backdrop-blur-md border-b px-8 py-4 shadow-sm">
         <div className="flex items-center gap-4">
-          <BtnReturnToGuest />
+          <BtnReturnBack />
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wider font-bold">Deck: {quiz.name}</p>
             <p className="text-sm font-medium text-gray-700">Card: {currentIndex + 1} / {quiz.flashcards.length}</p>
@@ -119,7 +154,6 @@ function LearnCards() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-3xl">
           <div className="bg-white rounded-xl shadow-xl overflow-hidden min-h-[450px] flex flex-col border border-gray-100">
@@ -131,9 +165,9 @@ function LearnCards() {
                   {currentCard.question}
                 </h2>
                 <div className={`mt-10 pt-10 border-t border-gray-100 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                   <p className="text-2xl text-indigo-600 font-medium text-center">
-                     {currentCard.answer}
-                   </p>
+                  <p className="text-2xl text-indigo-600 font-medium text-center">
+                    {currentCard.answer}
+                  </p>
                 </div>
               </div>
             </div>

@@ -3,8 +3,8 @@ import { useQuizEditor } from "../../hooks/useQuizEditor";
 import { useTranslation } from "react-i18next";
 import { QuizEditorModalProps } from "../../types/quiz";
 
-function QuizEditorModal({ quiz, isGuest, onClose } : QuizEditorModalProps) {
-  const { localQuiz, addFlashcard, deleteFlashcard } = useQuizEditor(quiz, isGuest);
+function QuizEditorModal({ quiz, isGuest, onClose, onQuizUpdate } : QuizEditorModalProps) {
+  const { localQuiz, addFlashcard, deleteFlashcard } = useQuizEditor(quiz, isGuest, onQuizUpdate);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const { t } = useTranslation();

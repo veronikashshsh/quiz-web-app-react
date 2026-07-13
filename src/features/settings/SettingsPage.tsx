@@ -1,14 +1,10 @@
-import React from 'react'
-import NavBar from '../../components/General/NavBar'
+import UnderConstruction from '../../components/General/UnderConstruction';
 
-function SettingsPage() {
-  return (
-    <div>
-        <NavBar />
-        SettingsPage
-        
-        </div>
-  )
-}
+const SettingsPage: React.FC = () => {
+  return <UnderConstruction
+  title="Налаштування скоро тут з'являться"
+  description="Ми додаємо можливість змінювати мову, тему та профіль"
+/>
+};
 
-export default SettingsPage
+export default SettingsPage;

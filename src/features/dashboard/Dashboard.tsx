@@ -1,18 +1,35 @@
-'use client';
+import { useStats } from '../../hooks/useStats';
+import { useQuizzes } from '../../hooks/useQuizzes';
+import { auth } from '../../../config/firebase';
+import { getWeakestQuiz } from '../../selectors/quizSelectors';
+import { QuizAreaProps } from '../../types/quiz';
+import DashboardHeader from '../../components/Dashboard/DashboardHeader';
+import StatsGrid from '../../components/Dashboard/StatsGrid';
+import WeakestQuizCard from '../../components/Dashboard/WeakestQuizCard';
+import RecentActivity from '../../components/Dashboard/RecentActivity';
+import QuickActions from '../../components/Dashboard/QuickActions';
 
-import MainContent from '../../components/Dashboard/MainContent';
-import NavBar from '../../components/General/NavBar';
+const Dashboard = ({ isGuest }: QuizAreaProps) =>{
+  const stats = useStats(isGuest);
+  const { quizzes } = useQuizzes(isGuest);
+  const username = auth.currentUser?.displayName || '';
 
+  const weakestQuiz = getWeakestQuiz(quizzes);
 
-const Dashboard: React.FC = () => {
   return (
-    <div className="flex h-screen bg-gray-100">
-      <NavBar />
-      <div className='flex-1 p-2'>
-       <MainContent isGuest={false}/>
-       </div>
+    <div className="flex-1 overflow-auto bg-gray-100">
+      <div className="max-w-5xl mx-auto px-6 py-8">
+        <DashboardHeader username={username} />
+        <StatsGrid stats={stats} />
+        <WeakestQuizCard quiz={weakestQuiz} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <RecentActivity />
+          <QuickActions username={username} />
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

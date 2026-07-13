@@ -3,17 +3,10 @@ import { useAuthModal } from '../../hooks/useAuth';
 import BtnToMain from '../../components/General/BtnToMain';
 import QuizArea from '../../components/Learn/QuizArea';
 
-interface GuestModeProps {
-  initialModal?: 'signin' | 'signup' | null;
-}
-
-const GuestMode: React.FC<GuestModeProps> = ({ initialModal = null }) => {
-   const { openSignIn, openSignUp} = useAuthModal(initialModal);
+const GuestMode = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header onSignIn={openSignIn} onSignUp={openSignUp}/>
-
-      {/* Banner */}
+  
       <div className="bg-indigo-50 border-b border-indigo-100 px-6 py-3">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
            <BtnToMain />

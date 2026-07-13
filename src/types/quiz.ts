@@ -1,6 +1,7 @@
 export interface Flashcard {
   question: string;
   answer: string;
+  isCorrect?: boolean;
 }
 
 export interface Quiz {
@@ -14,6 +15,7 @@ export interface QuizEditorModalProps {
   quiz: Quiz;
   isGuest: boolean;
   onClose: () => void;
+  onQuizUpdate: (updatedQuiz: Quiz) => void;
 }
 
 export interface CreateQuizModalProps {
@@ -33,4 +35,8 @@ export interface QuizCardProps {
   isGuest: boolean;
   onDelete: () => void;
   onEdit: (quiz: Quiz) => void;
+}
+
+export interface QuizAreaProps {
+  isGuest: boolean;
 }
