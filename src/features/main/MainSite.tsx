@@ -14,9 +14,9 @@ import { getRedirectResult } from 'firebase/auth';
 import { auth } from '../../../config/firebase';
 import { MainSiteProps } from '../../types/main';
 
-const MainSite: React.FC<MainSiteProps> = ({ initialModal }) => {
+const MainSite: React.FC<MainSiteProps> = ({ initialModal = null }) => {
   const { t } = useTranslation();
-  const { authModal, openSignIn, openSignUp, closeModal} = useAuthModal(initialModal);
+  const {  openSignIn, openSignUp, closeModal} = useAuthModal();
    const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,9 +41,9 @@ const MainSite: React.FC<MainSiteProps> = ({ initialModal }) => {
       <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
 
       <AuthModal
-        isOpen={authModal.isOpen}
+        isOpen={initialModal !== null}
+        defaultTab={initialModal ?? "signin"}
         onClose={closeModal}
-        defaultTab={authModal.tab}
       />
       
      <Hero onSignUp={openSignUp}/>
