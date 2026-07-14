@@ -8,11 +8,15 @@ import StatsGrid from '../../components/Dashboard/StatsGrid';
 import WeakestQuizCard from '../../components/Dashboard/WeakestQuizCard';
 import RecentActivity from '../../components/Dashboard/RecentActivity';
 import QuickActions from '../../components/Dashboard/QuickActions';
+import { getQuoteOfTheDay, getRandomQuote } from '../../selectors/quoteSelectors';
+import DailyQuoteCard from '../../components/Dashboard/DailyQuoteCard';
+import { useState } from 'react';
 
 const Dashboard = ({ isGuest }: QuizAreaProps) =>{
   const stats = useStats(isGuest);
   const { quizzes } = useQuizzes(isGuest);
   const username = auth.currentUser?.displayName || '';
+  const [quote] = useState(() => getRandomQuote());
 
   const weakestQuiz = getWeakestQuiz(quizzes);
 
@@ -20,6 +24,8 @@ const Dashboard = ({ isGuest }: QuizAreaProps) =>{
     <div className="flex-1 overflow-auto bg-gray-100">
       <div className="max-w-5xl mx-auto px-6 py-8">
         <DashboardHeader username={username} />
+
+        <DailyQuoteCard quote={quote} />
         <StatsGrid stats={stats} />
         <WeakestQuizCard quiz={weakestQuiz} />
 
