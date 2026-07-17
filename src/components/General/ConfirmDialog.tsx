@@ -1,10 +1,10 @@
-import { ConfirmDialogProps } from "../../types/dialog";
+import type { ConfirmDialogProps } from "../../types/dialog";
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   title,
   description,
-  confirmLabel = 'Видалити',
-  cancelLabel = 'Скасувати',
+  confirmLabel = "Видалити",
+  cancelLabel = "Скасувати",
   onConfirm,
   onCancel,
   isDangerous = true,
@@ -16,9 +16,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     >
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-2">{title}</h2>
-        {description && (
-          <p className="text-sm text-gray-500 mb-6">{description}</p>
-        )}
+        {description && <p className="text-sm text-gray-500 mb-6">{description}</p>}
 
         <div className="flex justify-end gap-2">
           <button
@@ -31,8 +29,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             onClick={onConfirm}
             className={`px-4 py-2.5 text-sm font-semibold text-white rounded-lg transition active:scale-95 ${
               isDangerous
-                ? 'bg-red-500 hover:bg-red-600'
-                : 'bg-indigo-600 hover:bg-indigo-700'
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-indigo-600 hover:bg-indigo-700"
             }`}
           >
             {confirmLabel}

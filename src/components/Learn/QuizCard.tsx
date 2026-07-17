@@ -1,31 +1,29 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { QuizCardProps } from '../../types/quiz';
-import { getRateStatus } from '../../utils/quizUtils';
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+import type { QuizCardProps } from "../../types/quiz";
+import { getRateStatus } from "../../utils/quizUtils";
 
 const QuizCard: React.FC<QuizCardProps> = ({ quiz, isGuest, onDelete, onEdit }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { name, successRate = 0 } = quiz;
-  
+
   const status = getRateStatus(successRate);
 
   const handleStart = () => {
-  if (isGuest) {
-    navigate(`/guest/quiz/${encodeURIComponent(quiz.name)}`);
-  } else {
-    navigate(`/quiz/${quiz.id}`);
-  }
-};
+    if (isGuest) {
+      navigate(`/guest/quiz/${encodeURIComponent(quiz.name)}`);
+    } else {
+      navigate(`/quiz/${quiz.id}`);
+    }
+  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-indigo-200 hover:shadow-sm transition group">
-
       <div className="flex items-start justify-between gap-2">
-        <h2 className="text-base font-semibold text-gray-900 leading-tight">
-          {name}
-        </h2>
+        <h2 className="text-base font-semibold text-gray-900 leading-tight">{name}</h2>
         <button
           onClick={onDelete}
           aria-label="Delete quiz"
@@ -38,10 +36,11 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, isGuest, onDelete, onEdit }) 
       {/* Success rate */}
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-400 font-medium"> {t('quiz.successRate')}</span>
-          <span className={`text-xs font-semibold ${status.text}`}>
-            {successRate}%
+          <span className="text-xs text-gray-400 font-medium">
+            {" "}
+            {t("quiz.successRate")}
           </span>
+          <span className={`text-xs font-semibold ${status.text}`}>{successRate}%</span>
         </div>
         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <div
@@ -57,21 +56,18 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, isGuest, onDelete, onEdit }) 
           aria-label="Edit quiz"
           className="flex-1 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition"
         >
-           {t('quiz.editQuiz')}
+          {t("quiz.editQuiz")}
         </button>
         <button
-         onClick={() => handleStart()}
+          onClick={() => handleStart()}
           aria-label="Start quiz"
           className="flex-1 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-lg transition"
         >
-          {t('quiz.startLearning')}
+          {t("quiz.startLearning")}
         </button>
       </div>
-
     </div>
-
-    
   );
-}
+};
 
 export default QuizCard;

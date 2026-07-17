@@ -1,17 +1,19 @@
+import type { User } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import type { DocumentData } from "firebase/firestore";
 import {
   collection,
+  deleteDoc,
   doc,
-  setDoc,
+  getDoc,
   getDocs,
   serverTimestamp,
-  deleteDoc,
+  setDoc,
   updateDoc,
-  getDoc,
-  DocumentData,
 } from "firebase/firestore";
+
 import { auth, db } from "../../config/firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { Quiz, Flashcard } from "../types/quiz";
+import type { Flashcard, Quiz } from "../types/quiz";
 
 function waitForUser(): Promise<User> {
   return new Promise((resolve, reject) => {
@@ -69,13 +71,15 @@ export async function getQuizById(quizId: string): Promise<Quiz | null> {
   const user = await waitForUser();
   const ref = doc(db, "users", user.uid, "quizzes", quizId);
   const snapshot = await getDoc(ref);
-  if (!snapshot.exists()) return null;
+  if (!snapshot.exists()) {
+    return null;
+  }
   return { id: snapshot.id, ...(snapshot.data() as Omit<Quiz, "id">) };
 }
 
 export async function updateFlashcards(
   quizId: string,
-  flashcards: Flashcard[]
+  flashcards: Flashcard[],
 ): Promise<void> {
   const user = await waitForUser();
   const ref = doc(db, "users", user.uid, "quizzes", quizId);
@@ -86,7 +90,9 @@ export async function calculateSuccessRate(quizId: string): Promise<number> {
   const user = await waitForUser();
   const ref = doc(db, "users", user.uid, "quizzes", quizId);
   const snapshot = await getDoc(ref);
-  if (!snapshot.exists()) throw new Error("Quiz not found");
+  if (!snapshot.exists()) {
+    throw new Error("Quiz not found");
+  }
 
   const quizData = snapshot.data() as DocumentData;
   const flashcards: Flashcard[] = quizData.flashcards ?? [];
@@ -98,14 +104,13 @@ export async function calculateSuccessRate(quizId: string): Promise<number> {
   return successRate;
 }
 
-export async function learnQuiz(
-  quizId: string,
-  results: boolean[]
-): Promise<number> {
+export async function learnQuiz(quizId: string, results: boolean[]): Promise<number> {
   const user = await waitForUser();
   const ref = doc(db, "users", user.uid, "quizzes", quizId);
   const snapshot = await getDoc(ref);
-  if (!snapshot.exists()) throw new Error("Quiz not found");
+  if (!snapshot.exists()) {
+    throw new Error("Quiz not found");
+  }
 
   const quizData = snapshot.data() as DocumentData;
   const flashcards: Flashcard[] = quizData.flashcards ?? [];

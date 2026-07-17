@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { getRedirectResult } from 'firebase/auth';
-import { auth } from '../../config/firebase.js';
-import MainSite from '../features/main/MainSite.tsx';
-import GuestMode from '../features/guest/GuestMode.tsx';
-import Dashboard from '../features/dashboard/Dashboard.tsx';
-import QuizEditor from '../components/Learn/QuizEditor.tsx';
-import LearnCards from '../components/Learn/LearnCards.tsx';
-import LearnPage from '../features/learn/LearnPage.tsx';
-import StatsPage from '../features/stats/StatsPage.tsx';
-import SettingsPage from '../features/settings/SettingsPage.tsx';
-import AppLayout from '../layouts/AppLayout.tsx';
-import GuestLayout from '../layouts/GuestLayout.tsx';
+import { getRedirectResult } from "firebase/auth";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
+import { auth } from "../../config/firebase.js";
+import LearnCards from "../components/Learn/LearnCards.tsx";
+import QuizEditor from "../components/Learn/QuizEditor.tsx";
+import Dashboard from "../features/dashboard/Dashboard.tsx";
+import GuestMode from "../features/guest/GuestMode.tsx";
+import LearnPage from "../features/learn/LearnPage.tsx";
+import MainSite from "../features/main/MainSite.tsx";
+import SettingsPage from "../features/settings/SettingsPage.tsx";
+import StatsPage from "../features/stats/StatsPage.tsx";
+import AppLayout from "../layouts/AppLayout.tsx";
+import GuestLayout from "../layouts/GuestLayout.tsx";
 
 const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
@@ -25,23 +25,23 @@ const AppRoutes: React.FC = () => {
         }
       })
       .catch((err) => {
-        console.error('Redirect result error:', err);
+        console.error("Redirect result error:", err);
       });
   }, []);
 
   return (
     <Routes>
-      <Route element={<GuestLayout />} >
+      <Route element={<GuestLayout />}>
         <Route path="/" element={<MainSite />} />
         <Route path="/login" element={<MainSite initialModal="signin" />} />
         <Route path="/register" element={<MainSite initialModal="signup" />} />
-      
+
         <Route path="/guest" element={<GuestMode />} />
         <Route path="/guest/quiz/:quizName" element={<LearnCards forcedGuest />} />
       </Route>
 
-       <Route element={<AppLayout />}>
-        <Route path="/dashboard/:name" element={<Dashboard  isGuest={false}/>} />
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard/:name" element={<Dashboard isGuest={false} />} />
         <Route path="/quiz/edit/:quizName" element={<QuizEditor />} />
         <Route path="/quiz/:quizId" element={<LearnCards />} />
         <Route path="/userquizarea/:name" element={<LearnPage />} />
@@ -50,6 +50,6 @@ const AppRoutes: React.FC = () => {
       </Route>
     </Routes>
   );
-}
+};
 
 export default AppRoutes;

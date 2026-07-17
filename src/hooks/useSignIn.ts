@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { 
-  getRedirectResult, 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  signInWithRedirect 
-} from "firebase/auth";
-import { ROUTES } from "../constants/routes";
-import { auth, googleProvider } from '../../config/firebase';
 import { FirebaseError } from "firebase/app";
+import {
+  getRedirectResult,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { auth, googleProvider } from "../../config/firebase";
+import { ROUTES } from "../constants/routes";
 
 interface UseSignInProps {
   onSuccess: () => void;
 }
 
 export function useSignIn({ onSuccess }: UseSignInProps) {
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
       .then((result) => {
         if (result?.user) {
           onSuccess();
-          navigate(ROUTES.DASHBOARD(result.user.displayName || 'user'));
+          navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
         }
       })
       .catch((err) => {
@@ -42,15 +43,15 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
 
   // Вхід через Email / Password
   const loginWithEmail = async (email: string, password: string) => {
-    setError('');
+    setError("");
     setLoading(true);
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       onSuccess();
-      navigate(ROUTES.DASHBOARD(result.user.displayName || 'user'));
+      navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
     } catch (err) {
       console.error("Email auth error:", err);
-      setError('Invalid email or password. Please try again.');
+      setError("Invalid email or password. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -58,7 +59,7 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
 
   // Вхід через Google (з урахуванням платформи)
   const loginWithGoogle = async () => {
-    setError('');
+    setError("");
     try {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -67,11 +68,11 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
       } else {
         const result = await signInWithPopup(auth, googleProvider);
         onSuccess();
-        navigate(ROUTES.DASHBOARD(result.user.displayName || 'user'));
+        navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
       }
     } catch (err) {
       console.error("Google auth error:", err);
-      setError('Google sign in failed. Please try again.');
+      setError("Google sign in failed. Please try again.");
     }
   };
 

@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { Quiz } from '../../types/quiz';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+import type { Quiz } from "../../types/quiz";
 
 interface WeakestQuizCardProps {
   quiz: Quiz | null;
@@ -9,7 +10,9 @@ interface WeakestQuizCardProps {
 const WeakestQuizCard: React.FC<WeakestQuizCardProps> = ({ quiz }) => {
   const navigate = useNavigate();
 
-  if (!quiz) return null;
+  if (!quiz) {
+    return null;
+  }
 
   return (
     <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex items-center justify-between gap-4">
@@ -22,7 +25,8 @@ const WeakestQuizCard: React.FC<WeakestQuizCardProps> = ({ quiz }) => {
             Потребує уваги
           </p>
           <p className="text-sm text-gray-800">
-            <span className="font-semibold">{quiz.name}</span> — {quiz.successRate}% успішності
+            <span className="font-semibold">{quiz.name}</span> — {quiz.successRate}%
+            успішності
           </p>
         </div>
       </div>

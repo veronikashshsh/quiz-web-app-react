@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { browserLocalPersistence, getAuth, GoogleAuthProvider, setPersistence } from "firebase/auth";
+import {
+  browserLocalPersistence,
+  getAuth,
+  GoogleAuthProvider,
+  setPersistence,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -9,10 +14,8 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
-
-console.log(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

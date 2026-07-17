@@ -1,3 +1,3 @@
 export interface MainSiteProps {
-  initialModal?: 'signin' | 'signup';
+  initialModal?: "signin" | "signup";
 }

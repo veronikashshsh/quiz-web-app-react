@@ -1,13 +1,14 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { StatsData } from '../../data/statsData';
-import { useStats } from '../../hooks/useStats';
-import { useTranslation } from 'react-i18next';
-import { StatCard } from '../../components/Stats/StatsCard'; 
-import { auth } from '../../../config/firebase'; 
-import QuizPerformanceChart from '../../components/Stats/QuizPerfomanceChart';
-import { useQuizzes } from '../../hooks/useQuizzes';
+import React from "react";
+import { useTranslation } from "react-i18next";
+
+import { auth } from "../../../config/firebase";
+import QuizPerformanceChart from "../../components/Stats/QuizPerfomanceChart";
+import { StatCard } from "../../components/Stats/StatsCard";
+import { StatsData } from "../../data/statsData";
+import { useQuizzes } from "../../hooks/useQuizzes";
+import { useStats } from "../../hooks/useStats";
 
 const StatsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -19,14 +20,11 @@ const StatsPage: React.FC = () => {
     <div className="flex h-screen bg-gray-100 overflow-hidden">
       <main className="flex-1 overflow-y-auto px-6 py-8">
         <div className="max-w-5xl mx-auto">
-          
           <header className="mb-8">
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              {t('statistics.title')}
+              {t("statistics.title")}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
-              {t('statistics.subtitle')}
-            </p>
+            <p className="text-sm text-gray-500 mt-1">{t("statistics.subtitle")}</p>
           </header>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -48,7 +46,6 @@ const StatsPage: React.FC = () => {
           </div>
 
           <QuizPerformanceChart quizzes={quizzes} />
-          
         </div>
       </main>
     </div>
@@ -56,4 +53,3 @@ const StatsPage: React.FC = () => {
 };
 
 export default StatsPage;
-
