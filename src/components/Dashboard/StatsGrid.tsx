@@ -1,6 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { StatsData } from '../../data/statsData';
-import { StatCard } from '../Stats/StatsCard';
+import { useTranslation } from "react-i18next";
+
+import { StatsData } from "../../data/statsData";
+import { StatCard } from "../Stats/StatsCard";
 
 interface StatsGridProps {
   stats: Record<string, number>;

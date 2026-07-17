@@ -31,7 +31,7 @@ export interface UserQuizAreaProps {
 }
 
 export interface QuizCardProps {
-  quiz: Quiz;         
+  quiz: Quiz;
   isGuest: boolean;
   onDelete: () => void;
   onEdit: (quiz: Quiz) => void;

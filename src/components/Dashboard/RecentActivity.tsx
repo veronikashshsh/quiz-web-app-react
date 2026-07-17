@@ -1,11 +1,9 @@
-import { BarChart2 } from 'lucide-react';
+import { BarChart2 } from "lucide-react";
 
 const RecentActivity: React.FC = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6">
-      <h2 className="text-sm font-semibold text-gray-900 mb-4">
-        Recent activity
-      </h2>
+      <h2 className="text-sm font-semibold text-gray-900 mb-4">Recent activity</h2>
       <div className="flex flex-col items-center justify-center py-8 text-center">
         <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center mb-3">
           <BarChart2 size={18} className="text-gray-400" />

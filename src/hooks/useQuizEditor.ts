@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
-import { updateFlashcards } from '../services/quizService';
-import { Quiz } from '../types/quiz';
+import { useEffect, useState } from "react";
+
+import { updateFlashcards } from "../services/quizService";
+import type { Quiz } from "../types/quiz";
 
 export function useQuizEditor(
   quiz: Quiz,
   isGuest: boolean,
-  onQuizUpdate?: (updatedQuiz: Quiz) => void
+  onQuizUpdate?: (updatedQuiz: Quiz) => void,
 ) {
   const [localQuiz, setLocalQuiz] = useState<Quiz>(quiz);
 
@@ -14,7 +15,9 @@ export function useQuizEditor(
   }, [quiz]);
 
   async function addFlashcard(question: string, answer: string): Promise<boolean> {
-    if (!question.trim() || !answer.trim()) return false;
+    if (!question.trim() || !answer.trim()) {
+      return false;
+    }
 
     const newCard = { question: question.trim(), answer: answer.trim() };
     const updatedCards = [...localQuiz.flashcards, newCard];
@@ -24,9 +27,11 @@ export function useQuizEditor(
     onQuizUpdate?.(updatedQuiz); // ← синхронізуємо назовні одразу
 
     if (isGuest) {
-      const allQuizzes: Quiz[] = JSON.parse(localStorage.getItem('quizzes') || '[]');
-      const newAll = allQuizzes.map(q => q.name === localQuiz.name ? { ...q, flashcards: updatedCards } : q);
-      localStorage.setItem('quizzes', JSON.stringify(newAll));
+      const allQuizzes: Quiz[] = JSON.parse(localStorage.getItem("quizzes") || "[]");
+      const newAll = allQuizzes.map((q) =>
+        q.name === localQuiz.name ? { ...q, flashcards: updatedCards } : q,
+      );
+      localStorage.setItem("quizzes", JSON.stringify(newAll));
     } else if (localQuiz.id) {
       try {
         await updateFlashcards(localQuiz.id, updatedCards);
@@ -47,11 +52,11 @@ export function useQuizEditor(
     onQuizUpdate?.(updatedQuiz); // ← і тут теж
 
     if (isGuest) {
-      const allQuizzes: Quiz[] = JSON.parse(localStorage.getItem('quizzes') || '[]');
-      const newAll = allQuizzes.map(q =>
-        q.name === localQuiz.name ? { ...q, flashcards: updatedCards } : q
+      const allQuizzes: Quiz[] = JSON.parse(localStorage.getItem("quizzes") || "[]");
+      const newAll = allQuizzes.map((q) =>
+        q.name === localQuiz.name ? { ...q, flashcards: updatedCards } : q,
       );
-      localStorage.setItem('quizzes', JSON.stringify(newAll));
+      localStorage.setItem("quizzes", JSON.stringify(newAll));
     } else if (localQuiz.id) {
       try {
         await updateFlashcards(localQuiz.id, updatedCards);

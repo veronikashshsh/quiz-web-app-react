@@ -1,4 +1,4 @@
-import { Construction } from 'lucide-react';
+import { Construction } from "lucide-react";
 
 interface UnderConstructionProps {
   title?: string;
@@ -6,8 +6,8 @@ interface UnderConstructionProps {
 }
 
 const UnderConstruction: React.FC<UnderConstructionProps> = ({
-  title = 'Ця сторінка в розробці',
-  description = 'Ми вже над цим працюємо. Скоро тут з’явиться щось цікаве.',
+  title = "Ця сторінка в розробці",
+  description = "Ми вже над цим працюємо. Скоро тут з’явиться щось цікаве.",
 }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">

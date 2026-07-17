@@ -1,12 +1,13 @@
-import { Outlet } from 'react-router-dom';
-import Header from '../features/main/components/Header';
-import { useAuthModal } from '../hooks/useAuth';
-import { MainSiteProps } from '../types/main';
+import { Outlet } from "react-router-dom";
 
-const GuestLayout: React.FC<MainSiteProps> = ({ initialModal = null}) => {
-      const { openSignIn, openSignUp} = useAuthModal();
+import Header from "../features/main/components/Header";
+import { useAuthModal } from "../hooks/useAuth";
+import type { MainSiteProps } from "../types/main";
+
+const GuestLayout: React.FC<MainSiteProps> = ({ initialModal = null }) => {
+  const { openSignIn, openSignUp } = useAuthModal();
   return (
-    <div className='min-h-screen flex flex-col'>
+    <div className="min-h-screen flex flex-col">
       <Header onSignIn={openSignIn} onSignUp={openSignUp} />
       <div>
         <Outlet />

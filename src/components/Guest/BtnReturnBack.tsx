@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { auth } from '../../../config/firebase';
+
+import { auth } from "../../../config/firebase";
 
 function BtnReturnBack() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function BtnReturnBack() {
     if (auth.currentUser) {
       navigate(`/userquizarea/${auth.currentUser.displayName}`);
     } else {
-      navigate('/guest');
+      navigate("/guest");
     }
   };
 
@@ -25,7 +26,7 @@ function BtnReturnBack() {
     >
       ←
     </button>
-  )
+  );
 }
 
-export default BtnReturnBack
+export default BtnReturnBack;

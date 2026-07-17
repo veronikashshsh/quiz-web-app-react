@@ -4,7 +4,8 @@ export const useStats = (isGuest: boolean) => {
   const { quizzesCount, cardsStudied, averageSuccessRate } = useQuizzes(isGuest);
 
   return {
-     quizzesCount,
+    quizzesCount,
     cardsStudied,
-    averageSuccessRate
-  }};
+    averageSuccessRate,
+  };
+};

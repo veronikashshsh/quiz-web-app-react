@@ -4,8 +4,8 @@ export function useAuthModal() {
   const navigate = useNavigate();
 
   return {
-    openSignIn: () => navigate('/login'),
-    openSignUp: () => navigate('/register'),
-    closeModal: () => navigate('/'),
+    openSignIn: () => navigate("/login"),
+    openSignUp: () => navigate("/register"),
+    closeModal: () => navigate("/"),
   };
 }

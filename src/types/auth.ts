@@ -1,9 +1,9 @@
-import { ChangeEvent, MouseEvent } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
 
 export interface AuthFieldProps {
   label: string;
   id: string;
-  type?: 'text' | 'password' | 'email' | 'number' | 'tel'; 
+  type?: "text" | "password" | "email" | "number" | "tel";
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;

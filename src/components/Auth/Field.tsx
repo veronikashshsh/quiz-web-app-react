@@ -1,9 +1,19 @@
-import { AuthFieldProps } from "../../types/auth";
+import type { AuthFieldProps } from "../../types/auth";
 
-function Field({ label, id, type = 'text', value, onChange, placeholder }: AuthFieldProps) {
+function Field({
+  label,
+  id,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+}: AuthFieldProps) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+      <label
+        htmlFor={id}
+        className="text-xs font-semibold text-gray-500 uppercase tracking-wider"
+      >
         {label}
       </label>
       <input
@@ -19,4 +29,4 @@ function Field({ label, id, type = 'text', value, onChange, placeholder }: AuthF
   );
 }
 
-export default Field
+export default Field;

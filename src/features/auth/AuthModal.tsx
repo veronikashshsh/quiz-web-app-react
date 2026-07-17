@@ -1,22 +1,25 @@
-import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
-import SignInForm from '../../components/Auth/SignInForm';
-import SignUpForm from '../../components/Auth/SignUpForm';
+import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import SignInForm from "../../components/Auth/SignInForm";
+import SignUpForm from "../../components/Auth/SignUpForm";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  defaultTab?: 'signin' | 'signup';
+  defaultTab?: "signin" | "signup";
 }
 
-function AuthModal({ isOpen, onClose, defaultTab = 'signin' } : AuthModalProps) {
+function AuthModal({ isOpen, onClose, defaultTab = "signin" }: AuthModalProps) {
   const [tab, setTab] = useState(defaultTab);
 
   useEffect(() => {
     setTab(defaultTab);
   }, [defaultTab]);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div
@@ -24,7 +27,6 @@ function AuthModal({ isOpen, onClose, defaultTab = 'signin' } : AuthModalProps) 
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 relative">
-
         {/* Кнопка закрити */}
         <button
           onClick={onClose}
@@ -37,32 +39,32 @@ function AuthModal({ isOpen, onClose, defaultTab = 'signin' } : AuthModalProps) 
         <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
           <button
             type="button"
-            onClick={() => setTab('signin')}
+            onClick={() => setTab("signin")}
             className={`flex-1 py-2 text-sm font-medium rounded-md transition ${
-              tab === 'signin'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
+              tab === "signin"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
             }`}
           >
             Sign in
           </button>
           <button
             type="button"
-            onClick={() => setTab('signup')}
+            onClick={() => setTab("signup")}
             className={`flex-1 py-2 text-sm font-medium rounded-md transition ${
-              tab === 'signup'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
+              tab === "signup"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
             }`}
           >
             Create account
           </button>
         </div>
 
-        {tab === 'signin' ? (
-          <SignInForm onSuccess={onClose} onSwitchToSignUp={() => setTab('signup')} />
+        {tab === "signin" ? (
+          <SignInForm onSuccess={onClose} onSwitchToSignUp={() => setTab("signup")} />
         ) : (
-          <SignUpForm onSuccess={onClose} onSwitchToSignIn={() => setTab('signin')} />
+          <SignUpForm onSuccess={onClose} onSwitchToSignIn={() => setTab("signin")} />
         )}
       </div>
     </div>

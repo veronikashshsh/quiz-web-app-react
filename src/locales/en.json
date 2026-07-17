@@ -5,65 +5,65 @@
   "greeting": "Hello, {{name}}!",
 
   "nav": {
-    "features":   "Features",
+    "features": "Features",
     "howItWorks": "How it works",
-    "tryFree":    "Try for free"
+    "tryFree": "Try for free"
   },
   "auth": {
-    "logIn":         "Log in",
+    "logIn": "Log in",
     "createAccount": "Create account"
   },
 
   "hero": {
-    "badge":    "Free to use, no account required",
-    "title":    "Learn anything. Remember everything.",
+    "badge": "Free to use, no account required",
+    "title": "Learn anything. Remember everything.",
     "subtitle": "Create flashcard decks, quiz yourself, and track your progress — all in one place.",
     "cta": {
-      "primary":   "Get started",
+      "primary": "Get started",
       "secondary": "Try without account"
     },
-     "quizCompleted": "Quiz completed",
+    "quizCompleted": "Quiz completed",
     "progress": "Progress"
   },
- 
+
   "features": {
-    "title":    "Everything you need to learn faster",
+    "title": "Everything you need to learn faster",
     "subtitle": "Simple tools that actually work.",
     "cards": {
       "title": "Flashcard decks",
-      "desc":  "Create custom decks with questions and answers. Study at your own pace."
+      "desc": "Create custom decks with questions and answers. Study at your own pace."
     },
     "progress": {
       "title": "Track your progress",
-      "desc":  "See your success rate for every deck. Know exactly what to review next."
+      "desc": "See your success rate for every deck. Know exactly what to review next."
     },
     "offline": {
       "title": "Works without account",
-      "desc":  "Start learning immediately as a guest. Create an account to sync across devices."
+      "desc": "Start learning immediately as a guest. Create an account to sync across devices."
     }
   },
- 
+
   "steps": {
-    "title":    "How it works",
+    "title": "How it works",
     "subtitle": "Three steps to start learning effectively.",
     "create": {
       "title": "Create a deck",
-      "desc":  "Add a quiz with any name — English words, history dates, anything you need to memorize."
+      "desc": "Add a quiz with any name — English words, history dates, anything you need to memorize."
     },
     "learn": {
       "title": "Add your cards",
-      "desc":  "Write questions and answers. The more specific, the better your results."
+      "desc": "Write questions and answers. The more specific, the better your results."
     },
     "track": {
       "title": "Quiz yourself",
-      "desc":  "Test your knowledge and watch your success rate grow with every session."
+      "desc": "Test your knowledge and watch your success rate grow with every session."
     }
   },
- 
+
   "cta": {
-    "title":    "Ready to learn smarter?",
+    "title": "Ready to learn smarter?",
     "subtitle": "Join thousands of students who use EFFLearn every day.",
-    "primary":   "Create free account",
+    "primary": "Create free account",
     "secondary": "Try as guest"
   },
   "testimonials": {
@@ -80,20 +80,19 @@
         "role": "Software developer",
         "feedback": "EFFLearn helps me learn new technologies. I create flashcards with code and concepts, then test myself. It makes the learning process more interactive and effective."
       },
-        {
-          "name": "Emma Rodriguez",
-          "role": "Philology student",
-          "feedback": "I use EFFLearn to study foreign languages. I create flashcards with new words and phrases, then test myself. It helps me quickly memorize new vocabulary."
-        }
+      {
+        "name": "Emma Rodriguez",
+        "role": "Philology student",
+        "feedback": "I use EFFLearn to study foreign languages. I create flashcards with new words and phrases, then test myself. It helps me quickly memorize new vocabulary."
+      }
     ]
-
   },
 
   "footer": {
     "sentence": "Empowering learners worldwide with effective, structured, and engaging educational experiences.",
     "copyright": "© 2026 EFFLearn.",
     "rights": "All rights reserved. Made with soul and several cups of coffee.",
-    "subscripe": "Subscribe to our newsletter for updates and tips.", 
+    "subscripe": "Subscribe to our newsletter for updates and tips.",
     "nav": {
       "company": "Company",
       "home": "Home",
@@ -107,7 +106,7 @@
   "guest": {
     "welcome": "You are in Guest mode",
     "message": "Progress is saved locally in your browser. Create an account to sync across devices and access your decks anywhere."
-  }, 
+  },
   "quiz": {
     "myQuizzes": "My Quizzes",
     "createQuiz": "New Quiz",
@@ -136,7 +135,7 @@
     "authorized": "authorized",
     "menu": "Menu"
   },
-   "dashboard": {
+  "dashboard": {
     "welcome": "Welcome back",
     "description": "Here you can create and manage your quizzes, track your progress, and improve your learning skills."
   },
@@ -146,7 +145,7 @@
     "quizzesTaken": "Total quizzes taken",
     "cardsLearned": "Cards learned",
     "averageScore": "Average score",
-    "recentActivity": "Recent activity", 
+    "recentActivity": "Recent activity",
     "noActivity": "You have no activity yet",
     "noActivityDesc": "Take a few quizzes to see your statistics here!"
   }

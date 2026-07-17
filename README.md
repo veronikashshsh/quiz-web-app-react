@@ -9,6 +9,7 @@ Live Demo
 💻 Repository: https://github.com/veronikashshsh/quiz-web-app-react
 
 Features
+
 1. Browse quiz categories
 2. Interactive multiple-choice questions
 3. Instant answer validation
@@ -19,9 +20,10 @@ Features
 8. Firebase Authentication
 
 Tech Stack
-   - Frontend: React, Typescript
-   - Styling: Tailwind CSS
-   - Tooling: Vite, ESLint
+
+- Frontend: React, Typescript
+- Styling: Tailwind CSS
+- Tooling: Vite, ESLint
 
 Installation
 

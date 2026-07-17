@@ -1,19 +1,26 @@
+import { FirebaseError } from "firebase/app";
+import {
+  createUserWithEmailAndPassword,
+  getRedirectResult,
+  signInWithPopup,
+  signInWithRedirect,
+  updateProfile,
+} from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleButton from "./GoogleButton";
+
+import { auth, googleProvider } from "../../../config/firebase";
+import type { SignUpFormProps } from "../../types/auth";
 import Divider from "./Divider";
 import Field from "./Field";
-import { createUserWithEmailAndPassword, getRedirectResult, signInWithPopup, signInWithRedirect, updateProfile } from "firebase/auth";
-import { auth, googleProvider } from "../../../config/firebase";
-import { FirebaseError } from "firebase/app";
-import { SignUpFormProps } from "../../types/auth";
+import GoogleButton from "./GoogleButton";
 
-function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [error, setError] = useState('');
+function SignUpForm({ onSuccess, onSwitchToSignIn }: SignUpFormProps) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -22,7 +29,7 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
       .then((result) => {
         if (result) {
           onSuccess();
-          navigate(`/dashboard/${result.user.displayName || 'user'}`);
+          navigate(`/dashboard/${result.user.displayName || "user"}`);
         }
       })
       .catch((err) => {
@@ -31,17 +38,16 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
       });
   }, []);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (password !== confirm) {
-      setError('Passwords do not match.');
+      setError("Passwords do not match.");
       return;
     }
     if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+      setError("Password must be at least 6 characters.");
       return;
     }
 
@@ -52,10 +58,10 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
       onSuccess();
       navigate(`/dashboard/${name}`);
     } catch (err) {
-      if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
-        setError('This email is already registered. Try signing in.');
+      if (err instanceof FirebaseError && err.code === "auth/email-already-in-use") {
+        setError("This email is already registered. Try signing in.");
       } else {
-        setError('Something went wrong. Please try again.');
+        setError("Something went wrong. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -64,17 +70,17 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
 
   const handleGoogle = async () => {
     try {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if(isMobile){
-          await signInWithRedirect(auth, googleProvider);
-        } else {
-          const result = await signInWithPopup(auth, googleProvider);
-          const userDisplayName = result.user.displayName || 'user';
-          onSuccess();
-          navigate(`/dashboard/${userDisplayName}`);
-        }
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        const userDisplayName = result.user.displayName || "user";
+        onSuccess();
+        navigate(`/dashboard/${userDisplayName}`);
+      }
     } catch (err) {
-      setError('Google sign in failed. Please try again.');
+      setError("Google sign in failed. Please try again.");
     }
   };
 
@@ -83,15 +89,40 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
       <GoogleButton onClick={handleGoogle} />
       <Divider />
 
-      <Field label="Name" id="signup-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
-      <Field label="Email" id="signup-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
-      <Field label="Password" id="signup-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min. 6 characters" />
-      <Field label="Confirm password" id="signup-confirm" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="••••••••" />
+      <Field
+        label="Name"
+        id="signup-name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Your name"
+      />
+      <Field
+        label="Email"
+        id="signup-email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@example.com"
+      />
+      <Field
+        label="Password"
+        id="signup-password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Min. 6 characters"
+      />
+      <Field
+        label="Confirm password"
+        id="signup-confirm"
+        type="password"
+        value={confirm}
+        onChange={(e) => setConfirm(e.target.value)}
+        placeholder="••••••••"
+      />
 
       {error && (
-        <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
-          {error}
-        </p>
+        <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>
       )}
 
       <button
@@ -99,11 +130,11 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
         disabled={loading}
         className="w-full py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 active:scale-[0.98] rounded-lg transition mt-1"
       >
-        {loading ? 'Creating account...' : 'Create account'}
+        {loading ? "Creating account..." : "Create account"}
       </button>
 
       <p className="text-center text-xs text-gray-400">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <button
           type="button"
           onClick={onSwitchToSignIn}
@@ -116,4 +147,4 @@ function SignUpForm({ onSuccess, onSwitchToSignIn } : SignUpFormProps) {
   );
 }
 
-export default SignUpForm
+export default SignUpForm;

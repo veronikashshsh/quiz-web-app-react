@@ -1,21 +1,22 @@
-import { useStats } from '../../hooks/useStats';
-import { useQuizzes } from '../../hooks/useQuizzes';
-import { auth } from '../../../config/firebase';
-import { getWeakestQuiz } from '../../selectors/quizSelectors';
-import { QuizAreaProps } from '../../types/quiz';
-import DashboardHeader from '../../components/Dashboard/DashboardHeader';
-import StatsGrid from '../../components/Dashboard/StatsGrid';
-import WeakestQuizCard from '../../components/Dashboard/WeakestQuizCard';
-import RecentActivity from '../../components/Dashboard/RecentActivity';
-import QuickActions from '../../components/Dashboard/QuickActions';
-import { getQuoteOfTheDay, getRandomQuote } from '../../selectors/quoteSelectors';
-import DailyQuoteCard from '../../components/Dashboard/DailyQuoteCard';
-import { useState } from 'react';
+import { useState } from "react";
 
-const Dashboard = ({ isGuest }: QuizAreaProps) =>{
+import { auth } from "../../../config/firebase";
+import DailyQuoteCard from "../../components/Dashboard/DailyQuoteCard";
+import DashboardHeader from "../../components/Dashboard/DashboardHeader";
+import QuickActions from "../../components/Dashboard/QuickActions";
+import RecentActivity from "../../components/Dashboard/RecentActivity";
+import StatsGrid from "../../components/Dashboard/StatsGrid";
+import WeakestQuizCard from "../../components/Dashboard/WeakestQuizCard";
+import { useQuizzes } from "../../hooks/useQuizzes";
+import { useStats } from "../../hooks/useStats";
+import { getWeakestQuiz } from "../../selectors/quizSelectors";
+import { getRandomQuote } from "../../selectors/quoteSelectors";
+import type { QuizAreaProps } from "../../types/quiz";
+
+const Dashboard = ({ isGuest }: QuizAreaProps) => {
   const stats = useStats(isGuest);
   const { quizzes } = useQuizzes(isGuest);
-  const username = auth.currentUser?.displayName || '';
+  const username = auth.currentUser?.displayName || "";
   const [quote] = useState(() => getRandomQuote());
 
   const weakestQuiz = getWeakestQuiz(quizzes);
@@ -36,6 +37,6 @@ const Dashboard = ({ isGuest }: QuizAreaProps) =>{
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
