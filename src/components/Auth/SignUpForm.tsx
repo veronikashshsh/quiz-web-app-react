@@ -1,14 +1,12 @@
 import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
-  getRedirectResult,
   signInWithPopup,
   signInWithRedirect,
   updateProfile,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { auth, googleProvider } from "../../../config/firebase";
 import type { SignUpFormProps } from "../../types/auth";
 import Divider from "./Divider";
@@ -24,7 +22,7 @@ function SignUpForm({ onSuccess, onSwitchToSignIn }: SignUpFormProps) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
+ /* useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         if (result) {
@@ -36,7 +34,7 @@ function SignUpForm({ onSuccess, onSwitchToSignIn }: SignUpFormProps) {
         console.error("Redirect error:", err);
         setError("Failed to complete Google Sign In.");
       });
-  }, []);
+  }, []);*/
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

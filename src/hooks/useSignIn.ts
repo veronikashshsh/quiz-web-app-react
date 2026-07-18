@@ -20,7 +20,7 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // Обробка повернення користувача після редіректу (iOS/Android)
+  // redirect iOS/Android 
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
@@ -31,8 +31,6 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
       })
       .catch((err) => {
         if (err instanceof FirebaseError) {
-          console.error("Firebase code:", err.code);
-          console.error("Firebase message:", err.message);
           setError(err.message);
         } else {
           console.error(err);
@@ -41,7 +39,7 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
       });
   }, [navigate, onSuccess]);
 
-  // Вхід через Email / Password
+  //  Email / Password
   const loginWithEmail = async (email: string, password: string) => {
     setError("");
     setLoading(true);
@@ -50,31 +48,32 @@ export function useSignIn({ onSuccess }: UseSignInProps) {
       onSuccess();
       navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
     } catch (err) {
-      console.error("Email auth error:", err);
       setError("Invalid email or password. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Вхід через Google (з урахуванням платформи)
   const loginWithGoogle = async () => {
-    setError("");
-    try {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  setError("");
 
-      if (isMobile) {
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        const result = await signInWithPopup(auth, googleProvider);
-        onSuccess();
-        navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
-      }
-    } catch (err) {
-      console.error("Google auth error:", err);
-      setError("Google sign in failed. Please try again.");
+  try {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      await signInWithRedirect(auth, googleProvider);
+    } else {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      onSuccess();
+      navigate(ROUTES.DASHBOARD(result.user.displayName || "user"));
     }
-  };
+  } catch (err) {
+    if (err instanceof FirebaseError) {
+      setError(err.message);
+    }
+  }
+};
 
   return {
     loginWithEmail,

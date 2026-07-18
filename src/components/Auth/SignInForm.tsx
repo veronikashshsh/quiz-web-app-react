@@ -1,10 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getRedirectResult, signInWithPopup, signInWithRedirect } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-
-import { auth, googleProvider } from "../../../config/firebase";
 import { useSignIn } from "../../hooks/useSignIn";
 import type { SignInFormData } from "../../schemas/signInSchema";
 import { signInSchema } from "../../schemas/signInSchema";
@@ -23,7 +19,6 @@ function SignInForm({ onSuccess, onSwitchToSignUp }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -34,7 +29,7 @@ function SignInForm({ onSuccess, onSwitchToSignUp }: SignInFormProps) {
   });
 
   // for ios redirect
-  useEffect(() => {
+ /* useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         if (result) {
@@ -46,9 +41,9 @@ function SignInForm({ onSuccess, onSwitchToSignUp }: SignInFormProps) {
         console.error("Redirect error:", err);
         setError("Failed to complete Google Sign In.");
       });
-  }, []);
+  }, []);*/
 
-  const handleGoogle = async () => {
+  /*const handleGoogle = async () => {
     try {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -63,7 +58,11 @@ function SignInForm({ onSuccess, onSwitchToSignUp }: SignInFormProps) {
     } catch (err) {
       setError("Google sign in failed. Please try again.");
     }
-  };
+  };*/
+
+  const handleGoogle = async () => {
+  await loginWithGoogle();
+};
 
   const onSubmit = async (data: SignInFormData) => {
     try {
